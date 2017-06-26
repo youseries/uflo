@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>我的任务</title>
+ <script type="text/javascript" src="${contextPath}/uflo/res/asserts/venderjs/jquery.min.js"></script>
+ <script type="text/javascript" src="${contextPath}/uflo/res/asserts/venderjs/raphael.min.js"></script>
+</head>
+<body style="margin:5px">
+<div id='container' style="overflow:auto"></div>
+<script type="text/javascript">
+	window._server="${contextPath}/uflo";
+</script>
+<script type="text/javascript" src="${contextPath}/uflo/res/asserts/venderjs/ProcessDiagram.js"></script>
+<script type="text/javascript">
+	(new ProcessDiagram()).show('container',${parameters},window._server);
+</script>
+</body>
+</html>

@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.bstek.com/uflo" elementFormDefault="qualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.bstek.com/uflo">
+	
+	<xsd:element name="uflo-process">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="description" type="xsd:string" maxOccurs="1" minOccurs="0"></xsd:element>
+				<xsd:element name="start" type="start" maxOccurs="1"></xsd:element>
+				<xsd:element name="task" type="task" maxOccurs="unbounded" minOccurs="0"></xsd:element>
+				<xsd:element name="action" type="action" maxOccurs="unbounded" minOccurs="0"></xsd:element>
+				<xsd:element name="decision" type="decision" maxOccurs="unbounded" minOccurs="0"></xsd:element>
+				<xsd:element name="foreach" type="foreach" maxOccurs="unbounded" minOccurs="0"></xsd:element>
+				<xsd:element name="fork" type="fork" maxOccurs="unbounded" minOccurs="0"></xsd:element>
+				<xsd:element name="join" type="join" maxOccurs="unbounded" minOccurs="0"></xsd:element>
+				<xsd:element name="subprocess" type="subprocess" maxOccurs="unbounded" minOccurs="0"></xsd:element>
+				<xsd:element name="swimlane" type="swimlane" maxOccurs="unbounded" minOccurs="0"></xsd:element>
+				<xsd:element name="end" type="end" maxOccurs="unbounded"></xsd:element>
+			</xsd:sequence>
+			<xsd:attribute name="name" type="xsd:string" use="required"></xsd:attribute>
+			<xsd:attribute name="key" type="xsd:string"></xsd:attribute>
+			<xsd:attribute name="start-process-url" type="xsd:string"></xsd:attribute>
+			<xsd:attribute name="category-id" type="xsd:string"></xsd:attribute>
+			<xsd:attribute name="event-handler-bean" type="xsd:string"></xsd:attribute>
+		</xsd:complexType>
+	</xsd:element>
+	
+	<xsd:complexType name="fork">
+		<xsd:sequence>
+			<xsd:element name="description" type="xsd:string" maxOccurs="1" minOccurs="0"></xsd:element>
+			<xsd:element name="sequence-flow" type="sequenceFlow" maxOccurs="unbounded"></xsd:element>
+		</xsd:sequence>	
+		<xsd:attribute name="name" type="xsd:string" use="required"></xsd:attribute>
+		<xsd:attribute name="event-handler-bean" type="xsd:string"></xsd:attribute>
+	</xsd:complexType>
+	
+	<xsd:complexType name="subprocess">
+		<xsd:sequence>
+			<xsd:element name="in-subprocess-variable" type="subprocessVariable" maxOccurs="unbounded" minOccurs="0"></xsd:element>
+			<xsd:element name="out-subprocess-variable" type="subprocessVariable" maxOccurs="unbounded" minOccurs="0"></xsd:element>
+			<xsd:element name="description" type="xsd:string" maxOccurs="1" minOccurs="0"></xsd:element>
+			<xsd:element name="sequence-flow" type="sequenceFlow" maxOccurs="unbounded"></xsd:element>
+		</xsd:sequence>	
+		<xsd:attribute name="name" type="xsd:string" use="required"></xsd:attribute>
+		<xsd:attribute name="subprocess-type" use="required">
+			<xsd:simpleType>
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="Key"></xsd:enumeration>
+					<xsd:enumeration value="Name"></xsd:enumeration>
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:attribute>
+		<xsd:attribute name="subprocess-name" type="xsd:string"></xsd:attribute>
+		<xsd:attribute name="subprocess-key" type="xsd:string"></xsd:attribute>
+		<xsd:attribute name="subprocess-id" type="xsd:string"></xsd:attribute>
+		<xsd:attribute name="complete-start-task" type="xsd:boolean"></xsd:attribute>
+		<xsd:attribute name="event-handler-bean" type="xsd:string"></xsd:attribute>
+	</xsd:complexType>
+	
+	<xsd:complexType name="subprocessVariable">
+		<xsd:attribute name="in-parameter-key" type="xsd:string" use="required"></xsd:attribute>
+		<xsd:attribute name="out-parameter-key" type="xsd:string" use="required"></xsd:attribute>
+	</xsd:complexType>
+	
+	<xsd:complexType name="join">
+		<xsd:sequence>
+			<xsd:element name="description" type="xsd:string" maxOccurs="1" minOccurs="0"></xsd:element>
+			<xsd:element name="sequence-flow" type="sequenceFlow" maxOccurs="unbounded"></xsd:element>
+		</xsd:sequence>	
+		<xsd:attribute name="name" type="xsd:string" use="required"></xsd:attribute>
+		<xsd:attribute name="multiplicity" type="xsd:int"></xsd:attribute>
+		<xsd:attribute name="percent-multiplicity" type="xsd:int"></xsd:attribute>
+		<xsd:attribute name="event-handler-bean" type="xsd:string"></xsd:attribute>		
+	</xsd:complexType>
+	
+	<xsd:complexType name="foreach">
+		<xsd:sequence>
+			<xsd:element name="description" type="xsd:string" maxOccurs="1" minOccurs="0"></xsd:element>
+			<xsd:element name="sequence-flow" type="sequenceFlow" maxOccurs="unbounded"></xsd:element>
+		</xsd:sequence>	
+		<xsd:attribute name="name" type="xsd:string" use="required"></xsd:attribute>
+		<xsd:attribute name="var" type="xsd:string" use="required"></xsd:attribute>
+		<xsd:attribute name="foreach-type" use="required">
+			<xsd:simpleType>
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="In"></xsd:enumeration>
+					<xsd:enumeration value="Handler"></xsd:enumeration>
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:attribute>
+		<xsd:attribute name="in" type="xsd:string"></xsd:attribute>		
+		<xsd:attribute name="handler-bean" type="xsd:string"></xsd:attribute>
+		<xsd:attribute name="event-handler-bean" type="xsd:string"></xsd:attribute>		
+	</xsd:complexType>
+	
+	<xsd:complexType name="action">
+		<xsd:sequence>
+			<xsd:element name="description" type="xsd:string" maxOccurs="1" minOccurs="0"></xsd:element>
+			<xsd:element name="sequence-flow" type="sequenceFlow" maxOccurs="unbounded"></xsd:element>
+		</xsd:sequence>	
+		<xsd:attribute name="name" type="xsd:string" use="required"></xsd:attribute>
+		<xsd:attribute name="handler-bean" type="xsd:string" use="required"></xsd:attribute>
+		<xsd:attribute name="event-handler-bean" type="xsd:string"></xsd:attribute>
+	</xsd:complexType>
+	
+	<xsd:complexType name="decision">
+		<xsd:sequence>
+			<xsd:element name="description" type="xsd:string" maxOccurs="1" minOccurs="0"></xsd:element>
+			<xsd:element name="sequence-flow" type="sequenceFlow" maxOccurs="unbounded"></xsd:element>
+		</xsd:sequence>	
+		<xsd:attribute name="name" type="xsd:string" use="required"></xsd:attribute>
+		<xsd:attribute name="decision-type" use="required">
+			<xsd:simpleType>
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="Expression"></xsd:enumeration>
+					<xsd:enumeration value="Handler"></xsd:enumeration>
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:attribute>
+		<xsd:attribute name="expression" type="xsd:string"></xsd:attribute>
+		<xsd:attribute name="handler-bean" type="xsd:string"></xsd:attribute>
+		<xsd:attribute name="event-handler-bean" type="xsd:string"></xsd:attribute>
+	</xsd:complexType>
+	
+	<xsd:complexType name="componentAuthority">
+		<xsd:attribute name="component" type="xsd:string" use="required"></xsd:attribute>
+		<xsd:attribute name="authority" use="required">
+			<xsd:simpleType>
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="Read"></xsd:enumeration>
+					<xsd:enumeration value="Write"></xsd:enumeration>
+					<xsd:enumeration value="ReadAndWrite"></xsd:enumeration>
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:attribute>
+	</xsd:complexType>
+	
+	<xsd:complexType name="task">
+		<xsd:sequence>
+			<xsd:element name="description" type="xsd:string" maxOccurs="1" minOccurs="0"></xsd:element>
+			<xsd:element name="sequence-flow" type="sequenceFlow" maxOccurs="unbounded"></xsd:element>
+			<xsd:element name="assignee" type="assignee" maxOccurs="unbounded"></xsd:element>
+			<xsd:element name="form-element" type="formElement" minOccurs="0" maxOccurs="unbounded"></xsd:element>
+			<xsd:element name="user-data" type="userData" minOccurs="0" maxOccurs="unbounded"></xsd:element>
+			<xsd:element name="component-authority" type="componentAuthority" maxOccurs="unbounded" minOccurs="0"></xsd:element>
+			<xsd:element name="due" minOccurs="0">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="calendar-provider" type="calendar-provider" maxOccurs="unbounded" minOccurs="0"></xsd:element>
+						<xsd:element name="once-reminder">
+							<xsd:complexType>
+								<xsd:attribute name="handler-bean" type="xsd:string" use="required"></xsd:attribute>
+							</xsd:complexType>
+						</xsd:element>
+						<xsd:element name="period-reminder">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element name="calendar-provider" type="calendar-provider" maxOccurs="unbounded" minOccurs="0"></xsd:element>
+								</xsd:sequence>
+								<xsd:attribute name="handler-bean" type="xsd:string" use="required"></xsd:attribute>
+								<xsd:attribute name="repeat" type="xsd:int" use="required"></xsd:attribute>
+								<xsd:attribute name="unit" type="dateUnit" use="required"></xsd:attribute>
+							</xsd:complexType>
+						</xsd:element>
+						<xsd:element name="due-action">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element name="calendar-provider" type="calendar-provider" maxOccurs="unbounded" minOccurs="0"></xsd:element>
+								</xsd:sequence>
+								<xsd:attribute name="day" type="xsd:int" use="required"></xsd:attribute>
+								<xsd:attribute name="hour" type="xsd:int" use="required"></xsd:attribute>
+								<xsd:attribute name="minute" type="xsd:int" use="required"></xsd:attribute>
+								<xsd:attribute name="handler-bean" type="xsd:string" use="required"></xsd:attribute>
+							</xsd:complexType>
+						</xsd:element>
+					</xsd:sequence>
+					<xsd:attribute name="day" type="xsd:int" use="required"></xsd:attribute>
+					<xsd:attribute name="hour" type="xsd:int" use="required"></xsd:attribute>
+					<xsd:attribute name="minute" type="xsd:int" use="required"></xsd:attribute>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>	
+		<xsd:attribute name="name" type="xsd:string" use="required"></xsd:attribute>
+		<xsd:attribute name="task-name" type="xsd:string"></xsd:attribute>
+		<xsd:attribute name="form-template" type="xsd:string"></xsd:attribute>
+		<xsd:attribute name="allow-specify-assignee" type="xsd:boolean"></xsd:attribute>
+		<xsd:attribute name="countersign-multiplicity" type="xsd:int"></xsd:attribute>
+		<xsd:attribute name="countersign-percent-multiplicity" type="xsd:int"></xsd:attribute>
+		<xsd:attribute name="countersign-expression" type="xsd:string"></xsd:attribute>
+		<xsd:attribute name="countersign-handler" type="xsd:string"></xsd:attribute>
+		<xsd:attribute name="assignment-type" use="required">
+			<xsd:simpleType>
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="Expression"></xsd:enumeration>
+					<xsd:enumeration value="Swimlane"></xsd:enumeration>
+					<xsd:enumeration value="Handler"></xsd:enumeration>
+					<xsd:enumeration value="Assignee"></xsd:enumeration>
+					<xsd:enumeration value="ProcessPromoter"></xsd:enumeration>
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:attribute>
+		<xsd:attribute name="task-type" use="required">
+			<xsd:simpleType>
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="Normal"></xsd:enumeration>
+					<xsd:enumeration value="Countersign"></xsd:enumeration>
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:attribute>
+		<xsd:attribute name="swimlane" type="xsd:string"></xsd:attribute>
+		<xsd:attribute name="expression" type="xsd:string"></xsd:attribute>
+		<xsd:attribute name="assignment-handler-bean" type="xsd:string"></xsd:attribute>
+		<xsd:attribute name="url" type="xsd:string"></xsd:attribute>
+		<xsd:attribute name="event-handler-bean" type="xsd:string"></xsd:attribute>
+		<xsd:attribute name="task-listener-bean" type="xsd:string"></xsd:attribute>
+	</xsd:complexType>
+	
+	<xsd:complexType name="userData">
+		<xsd:attribute name="key" type="xsd:string" use="required"></xsd:attribute>
+		<xsd:attribute name="value" type="xsd:string" use="required"></xsd:attribute>
+	</xsd:complexType>
+	
+	<xsd:complexType name="formElement">
+		<xsd:sequence>
+			<xsd:element name="mapping" maxOccurs="unbounded">
+				<xsd:complexType>
+					<xsd:attribute name="key" type="xsd:string" use="required"></xsd:attribute>
+					<xsd:attribute name="label" type="xsd:string" use="required"></xsd:attribute>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="name" type="xsd:string" use="required"></xsd:attribute>
+		<xsd:attribute name="caption" type="xsd:string" use="required"></xsd:attribute>
+		<xsd:attribute name="data-type" type="dataType" use="required"></xsd:attribute>
+		<xsd:attribute name="required" type="xsd:boolean" use="required"></xsd:attribute>
+		<xsd:attribute name="default-value" type="xsd:string"></xsd:attribute>
+		<xsd:attribute name="editor-type" type="editorType" use="required"></xsd:attribute>
+		<xsd:attribute name="authority" use="required">
+			<xsd:simpleType>
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="Read"></xsd:enumeration>
+					<xsd:enumeration value="Write"></xsd:enumeration>
+					<xsd:enumeration value="ReadAndWrite"></xsd:enumeration>
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:attribute>
+	</xsd:complexType>
+	
+	<xsd:simpleType name="dataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="String"></xsd:enumeration>
+			<xsd:enumeration value="int"></xsd:enumeration>
+			<xsd:enumeration value="long"></xsd:enumeration>
+			<xsd:enumeration value="double"></xsd:enumeration>
+			<xsd:enumeration value="float"></xsd:enumeration>
+			<xsd:enumeration value="date"></xsd:enumeration>
+			<xsd:enumeration value="time"></xsd:enumeration>
+			<xsd:enumeration value="boolean"></xsd:enumeration>
+		</xsd:restriction>	
+	</xsd:simpleType>
+	<xsd:simpleType name="editorType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="TextEditor"></xsd:enumeration>
+			<xsd:enumeration value="PasswordEditor"></xsd:enumeration>
+			<xsd:enumeration value="TextArea"></xsd:enumeration>
+			<xsd:enumeration value="CheckBox"></xsd:enumeration>
+			<xsd:enumeration value="RadioGroup"></xsd:enumeration>
+			<xsd:enumeration value="NumberSpinner"></xsd:enumeration>
+		</xsd:restriction>	
+	</xsd:simpleType>
+	
+	<xsd:complexType name="calendar-provider">
+		<xsd:attribute name="id" type="xsd:string" use="required"></xsd:attribute>
+		<xsd:attribute name="name" type="xsd:string" use="required"></xsd:attribute>	
+	</xsd:complexType>
+	
+	<xsd:simpleType name="dateUnit">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="minute"></xsd:enumeration>
+			<xsd:enumeration value="hour"></xsd:enumeration>
+			<xsd:enumeration value="day"></xsd:enumeration>
+		</xsd:restriction>	
+	</xsd:simpleType>
+	
+	<xsd:complexType name="assignee">
+		<xsd:attribute name="id" type="xsd:string" use="required"></xsd:attribute>
+		<xsd:attribute name="name" type="xsd:string" use="required"></xsd:attribute>
+		<xsd:attribute name="provider-id" type="xsd:string" use="required"></xsd:attribute>
+	</xsd:complexType>
+	
+	<xsd:complexType name="start">
+		<xsd:sequence>
+			<xsd:element name="description" type="xsd:string" maxOccurs="1" minOccurs="0"></xsd:element>
+			<xsd:element name="sequence-flow" type="sequenceFlow" maxOccurs="unbounded"></xsd:element>
+			<xsd:element name="component-authority" type="componentAuthority" maxOccurs="unbounded" minOccurs="0"></xsd:element>
+		</xsd:sequence>	
+		<xsd:attribute name="name" type="xsd:string" use="required"></xsd:attribute>
+		<xsd:attribute name="task-name" type="xsd:string"></xsd:attribute>
+		<xsd:attribute name="url" type="xsd:string"></xsd:attribute>
+		<xsd:attribute name="event-handler-bean" type="xsd:string"></xsd:attribute>
+	</xsd:complexType>
+	
+	<xsd:complexType name="end">
+		<xsd:all>
+			<xsd:element name="description" type="xsd:string" maxOccurs="1" minOccurs="0"></xsd:element>
+		</xsd:all>	
+		<xsd:attribute name="name" type="xsd:string" use="required"></xsd:attribute>
+		<xsd:attribute name="terminate" type="xsd:boolean" default="true"></xsd:attribute>
+		<xsd:attribute name="event-handler-bean" type="xsd:string"></xsd:attribute>
+	</xsd:complexType>
+	
+	<xsd:complexType name="sequenceFlow">
+		<xsd:attribute name="name" type="xsd:string"></xsd:attribute>
+		<xsd:attribute name="to" type="xsd:string" use="required"></xsd:attribute>
+		<xsd:attribute name="expression" type="xsd:string"></xsd:attribute>
+		<xsd:attribute name="handler-bean" type="xsd:string"></xsd:attribute>
+		<xsd:attribute name="condition-type">
+			<xsd:simpleType>
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="Expression"></xsd:enumeration>
+					<xsd:enumeration value="Handler"></xsd:enumeration>
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:attribute>
+	</xsd:complexType>
+	
+	<xsd:complexType name="swimlane">
+		<xsd:sequence>
+			<xsd:element name="description" type="xsd:string" maxOccurs="1" minOccurs="0"></xsd:element>
+			<xsd:element name="assignee" type="assignee" maxOccurs="unbounded"  minOccurs="0"></xsd:element>
+		</xsd:sequence>	
+		<xsd:attribute name="name" type="xsd:string" use="required"></xsd:attribute>
+		<xsd:attribute name="assignment-type" use="required">
+			<xsd:simpleType>
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="Assignee"></xsd:enumeration>
+					<xsd:enumeration value="Expression"></xsd:enumeration>
+					<xsd:enumeration value="Handler"></xsd:enumeration>
+					<xsd:enumeration value="ProcessPromoter"></xsd:enumeration>
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:attribute>
+		<xsd:attribute name="expression" type="xsd:string"></xsd:attribute>
+		<xsd:attribute name="assignment-handler-bean" type="xsd:string"></xsd:attribute>
+	</xsd:complexType>
+</xsd:schema>

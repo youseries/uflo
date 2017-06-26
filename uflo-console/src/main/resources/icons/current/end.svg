@@ -1,0 +1,8 @@
+<?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1481722699092" class="icon" style="" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1829" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><defs><style type="text/css"></style>
+<filter id="dropshadow" height="130%">
+	<feOffset result="offOut" in="SourceAlpha" dx="20" dy="20" />
+	<feGaussianBlur result="blurOut" in="offOut" stdDeviation="30" />
+	<feBlend in="SourceGraphic" in2="blurOut" mode="normal" />
+</filter>
+</defs>
+<path d="M512 0C228.266667 0 0 228.266667 0 512c0 283.733333 228.266667 512 512 512s512-228.266667 512-512C1024 228.266667 795.733333 0 512 0zM512 951.466667C268.8 951.466667 72.533333 755.2 72.533333 512 72.533333 268.8 268.8 72.533333 512 72.533333S951.466667 268.8 951.466667 512C951.466667 755.2 755.2 951.466667 512 951.466667zM437.333333 341.333333l-21.333333 0c-17.066667 0-32 14.933333-32 32l0 277.333333c0 17.066667 14.933333 32 32 32l21.333333 0c17.066667 0 32-14.933333 32-32l0-277.333333C469.333333 356.266667 454.4 341.333333 437.333333 341.333333zM608 341.333333l-21.333333 0c-17.066667 0-32 14.933333-32 32l0 277.333333c0 17.066667 14.933333 32 32 32l21.333333 0c17.066667 0 32-14.933333 32-32l0-277.333333C640 356.266667 625.066667 341.333333 608 341.333333z" p-id="1830" fill="#d81e06" filter="url(#dropshadow)"></path></svg>
