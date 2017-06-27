@@ -1,0 +1,57 @@
+{
+  "name": "uflo-console-js",
+  "version": "1.0.0",
+  "description": "UFLO console js project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jacky6024/uflo-console-js.git"
+  },
+  "keywords": [
+    "uflo",
+    "bpm",
+    "workflow"
+  ],
+  "author": "Jacky.gao",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/jacky6024/uflo-console-js/issues"
+  },
+  "homepage": "https://github.com/jacky6024/uflo-console-js#readme",
+  "dependencies": {
+    "bootbox": "^4.4.0",
+    "bootstrap": "^3.3.7",
+    "css": "^2.2.1",
+    "events": "^1.1.1",
+    "flowdesigner": "^1.1.47",
+    "font-awesome": "^4.7.0",
+    "jquery": "^3.1.1",
+    "object-assign": "^4.1.0",
+    "react": "^15.4.1",
+    "react-dom": "^15.4.1",
+    "react-redux": "^4.4.6",
+    "redux": "^3.6.0",
+    "redux-thunk": "^2.1.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.18.0",
+    "babel-core": "^6.18.2",
+    "babel-loader": "^6.2.8",
+    "babel-preset-es2015": "^6.18.0",
+    "babel-preset-react": "^6.16.0",
+    "clean-webpack-plugin": "^0.1.14",
+    "css-loader": "^0.26.1",
+    "expose-loader": "^0.7.1",
+    "file-loader": "^0.9.0",
+    "redux-devtools": "^3.3.1",
+    "redux-devtools-dock-monitor": "^1.1.1",
+    "redux-devtools-log-monitor": "^1.1.1",
+    "style-loader": "^0.13.1",
+    "url-loader": "^0.5.7",
+    "webpack": "^1.13.3",
+    "webpack-cleanup-plugin": "^0.4.1"
+  }
+}
