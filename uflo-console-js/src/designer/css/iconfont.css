@@ -1,0 +1,39 @@
+
+@font-face {font-family: "uflo";
+  src: url('iconfont.eot?t=1499157512854'); /* IE9*/
+  src: url('iconfont.eot?t=1499157512854#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('iconfont.woff?t=1499157512854') format('woff'), /* chrome, firefox */
+  url('iconfont.ttf?t=1499157512854') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+  url('iconfont.svg?t=1499157512854#uflo') format('svg'); /* iOS 4.1- */
+}
+
+.uflo {
+  font-family:"uflo" !important;
+  font-size:16px;
+  font-style:normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.uflo-fork:before { content: "\e600"; }
+
+.uflo-start:before { content: "\e601"; }
+
+.uflo-foreach:before { content: "\e603"; }
+
+.uflo-subprocess:before { content: "\e610"; }
+
+.uflo-end:before { content: "\e67b"; }
+
+.uflo-action:before { content: "\e606"; }
+
+.uflo-join:before { content: "\e607"; }
+
+.uflo-decision:before { content: "\e608"; }
+
+.uflo-task:before { content: "\e602"; }
+
+.uflo-end-terminate:before { content: "\e637"; }
+
+.uflo-task-countersign:before { content: "\e609"; }
+
