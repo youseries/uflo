@@ -210,6 +210,13 @@ public class EndNode extends Node{
 		}
 	}
 	
+	@Override
+	public NodeType getType() {
+		if(terminate){
+			return NodeType.TerminalEnd;
+		}
+		return NodeType.End;
+	}
 	
 	public boolean isTerminate() {
 		return terminate;

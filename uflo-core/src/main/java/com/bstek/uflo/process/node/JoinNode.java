@@ -112,6 +112,11 @@ public class JoinNode extends Node {
 	public void cancel(Context context, ProcessInstance processInstance) {
 	}
 
+	@Override
+	public NodeType getType() {
+		return NodeType.Join;
+	}
+	
 	public int getMultiplicity() {
 		return multiplicity;
 	}

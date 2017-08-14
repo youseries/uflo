@@ -27,7 +27,7 @@ public class PeriodReminder extends Reminder {
 	private static final long serialVersionUID = 1L;
 	private int repeat;
 	private DateUnit unit;
-	private List<CalendarInfo> calendarProviderInfos;
+	private List<CalendarInfo> calendarInfos;
 	public int getRepeat() {
 		return repeat;
 	}
@@ -40,11 +40,11 @@ public class PeriodReminder extends Reminder {
 	public void setUnit(DateUnit unit) {
 		this.unit = unit;
 	}
-	public List<CalendarInfo> getCalendarProviderInfos() {
-		return calendarProviderInfos;
+	public List<CalendarInfo> getCalendarInfos() {
+		return calendarInfos;
 	}
-	public void setCalendarProviderInfos(
-			List<CalendarInfo> calendarProviderInfos) {
-		this.calendarProviderInfos = calendarProviderInfos;
+	public void setCalendarInfos(
+			List<CalendarInfo> calendarInfos) {
+		this.calendarInfos = calendarInfos;
 	}
 }

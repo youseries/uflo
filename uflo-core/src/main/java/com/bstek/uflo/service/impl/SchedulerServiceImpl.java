@@ -199,7 +199,7 @@ public class SchedulerServiceImpl implements SchedulerService,ApplicationContext
 		if(reminder==null || !(reminder instanceof PeriodReminder)){
 			return null;
 		}
-		List<CalendarInfo> infos=((PeriodReminder)reminder).getCalendarProviderInfos();
+		List<CalendarInfo> infos=((PeriodReminder)reminder).getCalendarInfos();
 		if(infos==null){
 			return null;
 		}

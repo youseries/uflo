@@ -36,15 +36,15 @@ import com.bstek.uflo.utils.IDGenerator;
  */
 public class ForeachNode extends Node {
 	private static final long serialVersionUID = 1L;
-	private String var;
+	private String variable;
 	private ForeachType foreachType;
-	private String in;
+	private String processVariable;
 	private String handlerBean;
 	@SuppressWarnings("unchecked")
 	@Override
 	public boolean enter(Context context, ProcessInstance processInstance) {
 		Collection<Object> coll=null;
-		if(StringUtils.isEmpty(var)){
+		if(StringUtils.isEmpty(variable)){
 			throw new IllegalArgumentException("ForeachNode var property can not be null");
 		}
 		if(foreachType.equals(ForeachType.Handler)){
@@ -54,10 +54,10 @@ public class ForeachNode extends Node {
 				throw new IllegalArgumentException("ForeachNode ["+handlerBean+"] return value is invalid!");
 			}
 		}else{
-			if(StringUtils.isEmpty(in)){
-				throw new IllegalArgumentException("ForeachNode in property can not be null");
+			if(StringUtils.isEmpty(processVariable)){
+				throw new IllegalArgumentException("ForeachNode processVariable property can not be null");
 			}
-			Object variableObj=context.getExpressionContext().eval(processInstance, in);
+			Object variableObj=context.getExpressionContext().eval(processInstance, processVariable);
 			if(variableObj instanceof Object[]){
 				coll=new ArrayList<Object>();
 				Object objs[]=(Object[])variableObj;
@@ -67,7 +67,7 @@ public class ForeachNode extends Node {
 			}else if(variableObj instanceof Collection){
 				coll=(Collection<Object>)variableObj;
 			}else{
-				throw new IllegalArgumentException("ForeachHandler ["+in+"] return value type must be a collection or a array!");
+				throw new IllegalArgumentException("ForeachHandler ["+processVariable+"] return value type must be a collection or a array!");
 			}
 		}
 		createSubprocessInstance(context, processInstance, coll);
@@ -93,7 +93,7 @@ public class ForeachNode extends Node {
 			subProcessInstance.setSubject(processInstance.getSubject());
 			context.getSession().save(subProcessInstance);
 			Map<String,Object> variables=new HashMap<String,Object>();
-			variables.put(var, obj);
+			variables.put(variable, obj);
 			context.getCommandService().executeCommand(new SaveProcessInstanceVariablesCommand(subProcessInstance, variables));
 			context.getExpressionContext().createContext(subProcessInstance, variables);
 			getSequenceFlows().get(0).execute(context, subProcessInstance);
@@ -109,6 +109,11 @@ public class ForeachNode extends Node {
 	public void cancel(Context context, ProcessInstance processInstance) {
 		
 	}
+	
+	@Override
+	public NodeType getType() {
+		return NodeType.Foreach;
+	}
 
 	public ForeachType getForeachType() {
 		return foreachType;
@@ -120,20 +125,20 @@ public class ForeachNode extends Node {
 	}
 
 
-	public String getIn() {
-		return in;
+	public String getProcessVariable() {
+		return processVariable;
 	}
 
-	public void setIn(String in) {
-		this.in = in;
+	public void setProcessVariable(String processVariable) {
+		this.processVariable = processVariable;
 	}
 
-	public String getVar() {
-		return var;
+	public String getVariable() {
+		return variable;
 	}
 
-	public void setVar(String var) {
-		this.var = var;
+	public void setVariable(String variable) {
+		this.variable = variable;
 	}
 
 	public String getHandlerBean() {

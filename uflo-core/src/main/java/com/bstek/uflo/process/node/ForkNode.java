@@ -77,4 +77,9 @@ public class ForkNode extends Node {
 	@Override
 	public void cancel(Context context, ProcessInstance processInstance) {
 	}
+	
+	@Override
+	public NodeType getType() {
+		return NodeType.Fork;
+	}
 }

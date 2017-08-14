@@ -41,6 +41,11 @@ public abstract class Node implements java.io.Serializable{
 	private List<SequenceFlowImpl> sequenceFlows;
 	private String eventHandlerBean;
 	
+	private int x;
+	private int y;
+	private int width;
+	private int height;
+	
 	/**
 	 * 进入当前节点的需要做的工作
 	 * @param context 上下文对象
@@ -125,6 +130,8 @@ public abstract class Node implements java.io.Serializable{
 		return flow;
 	}
 	
+	public abstract NodeType getType();
+	
 	public String getName() {
 		return name;
 	}
@@ -176,5 +183,37 @@ public abstract class Node implements java.io.Serializable{
 
 	public void setEventHandlerBean(String eventHandlerBean) {
 		this.eventHandlerBean = eventHandlerBean;
+	}
+
+	public int getX() {
+		return x;
+	}
+
+	public void setX(int x) {
+		this.x = x;
+	}
+
+	public int getY() {
+		return y;
+	}
+
+	public void setY(int y) {
+		this.y = y;
+	}
+
+	public int getWidth() {
+		return width;
+	}
+
+	public void setWidth(int width) {
+		this.width = width;
+	}
+
+	public int getHeight() {
+		return height;
+	}
+
+	public void setHeight(int height) {
+		this.height = height;
 	}
 }

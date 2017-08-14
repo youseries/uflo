@@ -46,6 +46,17 @@ public class SequenceFlowParser implements Parser {
 			flow.setHandlerBean(element.attributeValue("handler-bean"));
 		}
 		flow.setDiagram(parseDiagram(element));
+		String g=element.attributeValue("g");
+		if(StringUtils.isNotBlank(g)){
+			int pos=g.indexOf(":");
+			if(pos>-1){
+				g=g.substring(0,pos);
+				g=g.replaceAll(";", ",");
+			}else{
+				g=null;
+			}
+		}
+		flow.setG(element.attributeValue("g"));
 		return flow;
 	}
 

@@ -39,8 +39,12 @@ public class ForeachParser extends AbstractParser {
 		if(StringUtils.isNotEmpty(type)){
 			node.setForeachType(ForeachType.valueOf(type));			
 		}
-		node.setVar(unescape(element.attributeValue("var")));
-		node.setIn(unescape(element.attributeValue("in")));
+		node.setVariable(unescape(element.attributeValue("var")));
+		if(StringUtils.isNotBlank(element.attributeValue("process-variable"))){
+			node.setProcessVariable(unescape(element.attributeValue("process-variable")));			
+		}else{
+			node.setProcessVariable(unescape(element.attributeValue("in")));						
+		}
 		node.setHandlerBean(unescape(element.attributeValue("handler-bean")));
 		NodeDiagram diagram=parseDiagram(element);
 		diagram.setIcon("/icons/foreach.svg");

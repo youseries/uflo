@@ -41,6 +41,11 @@ public class ActionNode extends Node {
 	@Override
 	public void cancel(Context context, ProcessInstance processInstance) {
 	}
+	
+	@Override
+	public NodeType getType() {
+		return NodeType.Action;
+	}
 
 	public String getHandlerBean() {
 		return handlerBean;

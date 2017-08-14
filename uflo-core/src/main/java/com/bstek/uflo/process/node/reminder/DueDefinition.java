@@ -27,7 +27,7 @@ public class DueDefinition implements java.io.Serializable{
 	private int hour;
 	private int minute;
 	private int businessDayHours;
-	private List<CalendarInfo> calendarProviderInfos;
+	private List<CalendarInfo> calendarInfos;
 	private Reminder reminder;
 	private DueAction dueAction;
 	public int getDay() {
@@ -48,12 +48,11 @@ public class DueDefinition implements java.io.Serializable{
 	public void setMinute(int minute) {
 		this.minute = minute;
 	}
-	public List<CalendarInfo> getCalendarProviderInfos() {
-		return calendarProviderInfos;
+	public List<CalendarInfo> getCalendarInfos() {
+		return calendarInfos;
 	}
-	public void setCalendarProviderInfos(
-			List<CalendarInfo> calendarProviderInfos) {
-		this.calendarProviderInfos = calendarProviderInfos;
+	public void setCalendarInfos(List<CalendarInfo> calendarInfos) {
+		this.calendarInfos = calendarInfos;
 	}
 	public Reminder getReminder() {
 		return reminder;

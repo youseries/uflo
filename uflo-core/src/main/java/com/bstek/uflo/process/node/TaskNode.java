@@ -509,7 +509,7 @@ public class TaskNode extends Node {
 		if(dueMinute>0){
 			endCalendar.add(Calendar.MINUTE, dueMinute);
 		}
-		List<CalendarInfo> infos=dueDef.getCalendarProviderInfos();
+		List<CalendarInfo> infos=dueDef.getCalendarInfos();
 		if(infos!=null && infos.size()>0){
 			java.util.Calendar startCalendar = java.util.Calendar.getInstance();
 			SchedulerService schedulerService=(SchedulerService)context.getApplicationContext().getBean(SchedulerService.BEAN_ID);
@@ -657,6 +657,14 @@ public class TaskNode extends Node {
 			return Authority.Read;
 		}
 		return null;
+	}
+	
+	@Override
+	public NodeType getType() {
+		if(taskType.equals(TaskType.Countersign)){
+			return NodeType.CountersignTask;
+		}
+		return NodeType.Task;
 	}
 	
 	public String getUrl() {

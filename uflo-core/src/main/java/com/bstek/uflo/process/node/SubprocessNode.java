@@ -116,6 +116,11 @@ public class SubprocessNode extends Node {
 		return subprocess;
 	}
 	
+	@Override
+	public NodeType getType() {
+		return NodeType.Subprocess;
+	}
+	
 	public SubprocessType getSubprocessType() {
 		return subprocessType;
 	}

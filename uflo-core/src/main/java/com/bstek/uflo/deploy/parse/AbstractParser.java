@@ -18,6 +18,7 @@ package com.bstek.uflo.deploy.parse;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import org.dom4j.Element;
 import org.springframework.beans.BeansException;
@@ -51,19 +52,36 @@ public abstract class AbstractParser implements Parser,ApplicationContextAware {
 	protected NodeDiagram parseDiagram(Element element){
 		NodeDiagram diagram=new NodeDiagram();
 		String g=element.attributeValue("g");
-		if(StringUtils.isEmpty(g))return diagram;
-		String[] info=g.split(",");
 		String name=element.attributeValue("name");
 		String label=element.attributeValue("label");
-		if(info.length!=4){
-			throw new IllegalArgumentException("Node "+element.attributeValue("name")+" diagram info is invalide!");
-		}
-		diagram.setX(Integer.valueOf(info[0]));
-		diagram.setY(Integer.valueOf(info[1]));
-		diagram.setWidth(Integer.valueOf(info[2]));
-		diagram.setHeight(Integer.valueOf(info[3]));
 		diagram.setLabel(label);			
 		diagram.setName(name);
+		if(StringUtils.isNotBlank(g)){
+			String[] info=g.split(",");
+			if(info.length!=4){
+				throw new IllegalArgumentException("Node "+element.attributeValue("name")+" diagram info is invalide!");
+			}
+			diagram.setX(Integer.valueOf(info[0]));
+			diagram.setY(Integer.valueOf(info[1]));
+			diagram.setWidth(Integer.valueOf(info[2]));
+			diagram.setHeight(Integer.valueOf(info[3]));			
+		}
+		String x=element.attributeValue("x");
+		String y=element.attributeValue("y");
+		String width=element.attributeValue("width");
+		String height=element.attributeValue("height");
+		if(StringUtils.isNotBlank(x)){
+			diagram.setX(Integer.valueOf(x));
+		}
+		if(StringUtils.isNotBlank(y)){
+			diagram.setY(Integer.valueOf(y));
+		}
+		if(StringUtils.isNotBlank(width)){
+			diagram.setWidth(Integer.valueOf(width));
+		}
+		if(StringUtils.isNotBlank(height)){
+			diagram.setHeight(Integer.valueOf(height));
+		}
 		return diagram;
 	}
 	
@@ -78,6 +96,38 @@ public abstract class AbstractParser implements Parser,ApplicationContextAware {
 			node.setDescription(unescape(desc.getTextTrim()));
 		}
 		node.setEventHandlerBean(unescape(element.attributeValue("event-handler-bean")));
+		int x=0,y=0,width=80,height=40;
+		String g = element.attributeValue("g");
+		if(StringUtils.isNotBlank(g)){
+			StringTokenizer tokenizer=new StringTokenizer(g,",");
+			if (tokenizer.countTokens() == 4) {
+				x=Integer.valueOf(tokenizer.nextToken());
+				y=Integer.valueOf(tokenizer.nextToken());
+				width=Integer.valueOf(tokenizer.nextToken());
+				height=Integer.valueOf(tokenizer.nextToken());
+			}
+		}
+		node.setX(x);
+		node.setY(y);
+		node.setWidth(width);
+		node.setHeight(height);
+		String xAttr=element.attributeValue("x");
+		String yAttr=element.attributeValue("y");
+		String widthAttr=element.attributeValue("width");
+		String heightAttr=element.attributeValue("height");
+		if(StringUtils.isNotBlank(xAttr)){
+			node.setX(Integer.valueOf(xAttr));
+		}
+		if(StringUtils.isNotBlank(yAttr)){
+			node.setY(Integer.valueOf(yAttr));
+		}
+		if(StringUtils.isNotBlank(widthAttr)){
+			node.setWidth(Integer.valueOf(widthAttr));
+		}
+		if(StringUtils.isNotBlank(heightAttr)){
+			node.setHeight(Integer.valueOf(heightAttr));
+		}
+		
 	}
 	
 	protected List<Assignee> parserAssignees(Element element){

@@ -16,6 +16,7 @@
 package com.bstek.uflo.process.flow;
 
 import org.apache.commons.lang.StringUtils;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 import com.bstek.uflo.diagram.SequenceFlowDiagram;
 import com.bstek.uflo.env.Context;
@@ -40,6 +41,8 @@ public class SequenceFlowImpl implements SequenceFlow,java.io.Serializable{
 	private String expression;
 	private String handlerBean;
 	private long processId;
+	private String g;
+	@JsonIgnore
 	private SequenceFlowDiagram diagram;
 	public void execute(Context context,ProcessInstance processInstance){
 		ProcessService processService=context.getProcessService();
@@ -149,4 +152,11 @@ public class SequenceFlowImpl implements SequenceFlow,java.io.Serializable{
 		this.diagram = diagram;
 	}
 
+	public String getG() {
+		return g;
+	}
+
+	public void setG(String g) {
+		this.g = g;
+	}
 }

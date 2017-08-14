@@ -113,6 +113,11 @@ public class StartNode extends Node {
 		}
 	}
 	
+	@Override
+	public NodeType getType() {
+		return NodeType.Start;
+	}
+	
 	public String getTaskName() {
 		return taskName;
 	}

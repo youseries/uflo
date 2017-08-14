@@ -127,7 +127,7 @@ public class TaskParser extends AbstractTaskParser {
 			if(StringUtils.isNotEmpty(minuteStr)){
 				reminderDef.setMinute(Integer.valueOf(minuteStr));				
 			}
-			reminderDef.setCalendarProviderInfos(parseCalendarProviders(ele));
+			reminderDef.setCalendarInfos(parseCalendarProviders(ele));
 			for(Object child:ele.elements()){
 				if(!(child instanceof Element)){
 					continue;
@@ -144,7 +144,7 @@ public class TaskParser extends AbstractTaskParser {
 					reminder.setHandlerBean(unescape(childEle.attributeValue("handler-bean")));
 					reminder.setRepeat(Integer.valueOf(childEle.attributeValue("repeat")));
 					reminder.setUnit(DateUnit.valueOf(childEle.attributeValue("unit")));
-					reminder.setCalendarProviderInfos(parseCalendarProviders(childEle));
+					reminder.setCalendarInfos(parseCalendarProviders(childEle));
 					reminderDef.setReminder(reminder);
 				}else if(name.equals("due-action")){
 					DueAction action=new DueAction();

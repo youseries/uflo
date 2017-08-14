@@ -64,6 +64,11 @@ public class DecisionNode extends Node {
 	public void cancel(Context context, ProcessInstance processInstance) {
 	}
 
+	@Override
+	public NodeType getType() {
+		return NodeType.Decision;
+	}
+	
 	public String getExpression() {
 		return expression;
 	}
