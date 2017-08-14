@@ -1,7 +1,7 @@
 /**
  * Created by Jacky.Gao on 2016/12/8.
  */
-var ProcessDiagram=function(){
+window.ProcessDiagram=function(){
 };
 ProcessDiagram.prototype.show=function(containerId,parameters,contextPath){
     this.containerId=containerId;
@@ -146,7 +146,7 @@ ProcessDiagram.prototype._buildNode=function(nodeDiagram,showTime){
     if(nodeDiagram.label && nodeDiagram.label.length>0){
         info=nodeDiagram.label;
     }
-    if(nodeDiagram.shapeType=="Circle"){
+    //if(nodeDiagram.shapeType=="Circle"){
         node.attr("stroke-width","0");
         text=this.paper.text(x,y+32/2,info);
         text.attr("font-size",parseInt(nodeDiagram.fontSize));
@@ -158,6 +158,7 @@ ProcessDiagram.prototype._buildNode=function(nodeDiagram,showTime){
             var timeText=this.paper.text(nodeDiagram.x+width-15,nodeDiagram.y,time);
             timeText.attr("font-size","16");
         }
+    /*
     }else{
         text=this.paper.text(x+32/2,y,info);
         text.attr("font-size",parseInt(nodeDiagram.fontSize));
@@ -173,6 +174,8 @@ ProcessDiagram.prototype._buildNode=function(nodeDiagram,showTime){
             timeText.attr("font-size","16");
         }
     }
+    */
+
     text.attr({"fill":"rgb("+nodeDiagram.fontColor+")"});
     var fontBold=nodeDiagram.fontBold;
     if(fontBold){

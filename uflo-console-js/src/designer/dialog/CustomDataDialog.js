@@ -3,17 +3,17 @@
  */
 import {MsgBox} from 'flowdesigner';
 
-export default class EventSelectDialog{
-    constructor(title){
+export default class CustomDataDialog{
+    constructor(){
         this.dialog=$(`<div class="modal fade" role="dialog" aria-hidden="true" style="z-index: 10000">
-            <div class="modal-dialog modal-lg">
+            <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                             &times;
                         </button>
                         <h4 class="modal-title">
-                            ${title || 'Bean选择'}
+                            自定义数据
                         </h4>
                     </div>
                     <div class="modal-body"></div>
@@ -26,40 +26,36 @@ export default class EventSelectDialog{
         this.initBody(body,footer);
     }
     initBody(body,footer){
-        const table=$(`<table class="table table-bordered"><thead><tr style="background: #eeeeee">
-            <td>Bean ID</td><td style="width: 50px;">选择</td>
-        </tr></thead></table>`);
-        body.append(table);
-        this.tbody=$(`<tbody></tbody>`);
-        table.append(this.tbody);
+        const nameGroup=$(`<div class="form-group uflo-group"><label>键：</label></div>`);
+        body.append(nameGroup);
+        this.nameEditor=$(`<input type="text" class="form-control uflo-text-editor" style="width: 530px;">`);
+        nameGroup.append(this.nameEditor);
+
+        const valueGroup=$(`<div class="form-group uflo-group"><label>值：</label></div>`);
+        body.append(valueGroup);
+        this.valueEditor=$(`<input type="text" class="form-control uflo-text-editor" style="width: 530px;">`);
+        valueGroup.append(this.valueEditor);
+
+        const saveButton=$(`<button type="button" class="btn btn-default">保存</button>`);
+        footer.append(saveButton);
+        saveButton.click(()=>{
+            if(!this.nameEditor.val() || this.nameEditor.val()===''){
+                MsgBox.alert('请输入键');
+                return;
+            }
+            if(!this.valueEditor.val() || this.valueEditor.val()===''){
+                MsgBox.alert('请输入值');
+                return;
+            }
+            this.callback.call(this,{key:this.nameEditor.val(),value:this.valueEditor.val()});
+            this.dialog.modal('hide');
+        });
     }
 
-    show(handler,callback){
+    show(data,callback){
         this.dialog.modal('show');
-        this.tbody.empty();
-        const _this=this;
-        const url=window._server+"/handlerlist";
-        $.ajax({
-            url,
-            type:'POST',
-            data:{handler},
-            success:(data)=>{
-                for(let d of data){
-                    const tr=$(`<tr><td>${d}</td></tr>`);
-                    this.tbody.append(tr);
-                    const td=$(`<td></td>`);
-                    tr.append(td);
-                    const icon=$(`<i class="glyphicon glyphicon-hand-up" style="cursor: pointer;color: green;font-size: 12pt"></i>`);
-                    td.append(icon);
-                    icon.click(()=>{
-                        callback.call(this,d);
-                        _this.dialog.modal('hide');
-                    });
-                }
-            },
-            error:function(){
-                MsgBox.alert("加载["+handler+"]失败!");
-            }
-        });
+        this.callback=callback;
+        this.nameEditor.val(data.key);
+        this.valueEditor.val(data.value);
     }
 }

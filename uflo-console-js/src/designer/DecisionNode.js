@@ -2,18 +2,29 @@
  * Created by Jacky.Gao on 2017-07-10.
  */
 import BaseNode from './BaseNode.js';
-import actionSVG from './svg/action.svg';
+import decisionSVG from './svg/decision.svg';
 
-export default class ActionNode  extends BaseNode{
+export default class DecisionNode  extends BaseNode{
     getSvgIcon(){
-        return actionSVG;
+        return decisionSVG;
     }
     toXML(){
         const json=this.toJSON();
-        json.type="ActionNode";
+        json.type="DecisionNode";
         const nodeName=this.getNodeName(json.type);
         const nodeProps=this.getXMLNodeBaseProps(json);
-        let xml=`<${nodeName} ${nodeProps}>`;
+        let xml=`<${nodeName} ${nodeProps}`;
+        if(this.handlerBean){
+            xml+=` handler-bean="${this.handlerBean}"`;
+            xml+=` decision-type="Handler"`;
+        }else{
+            xml+=` expression="${this.expression}"`;
+            xml+=` decision-type="Expression"`;
+        }
+        xml+=`>`;
+        if(this.description){
+            xml+=` <description><![CDATA[${this.description}]]></description>`;
+        }
         xml+=this.getFromConnectionsXML();
         xml+=`</${nodeName}>`;
         return xml;

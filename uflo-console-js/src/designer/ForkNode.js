@@ -2,18 +2,21 @@
  * Created by Jacky.Gao on 2017-07-10.
  */
 import BaseNode from './BaseNode.js';
-import actionSVG from './svg/action.svg';
+import forkSVG from './svg/fork.svg';
 
-export default class ActionNode  extends BaseNode{
+export default class ForkNode  extends BaseNode{
     getSvgIcon(){
-        return actionSVG;
+        return forkSVG;
     }
     toXML(){
         const json=this.toJSON();
-        json.type="ActionNode";
+        json.type="ForkNode";
         const nodeName=this.getNodeName(json.type);
         const nodeProps=this.getXMLNodeBaseProps(json);
         let xml=`<${nodeName} ${nodeProps}>`;
+        if(this.description){
+            xml+=` <description><![CDATA[${this.description}]]></description>`;
+        }
         xml+=this.getFromConnectionsXML();
         xml+=`</${nodeName}>`;
         return xml;

@@ -3,7 +3,7 @@
  */
 import {MsgBox} from 'flowdesigner';
 
-export default class OpenDialog{
+export default class AssignProviderListDialog{
     constructor(){
         this.dialog=$(`<div class="modal fade" role="dialog" aria-hidden="true" style="z-index: 10000">
             <div class="modal-dialog modal-lg">
@@ -13,7 +13,7 @@ export default class OpenDialog{
                             &times;
                         </button>
                         <h4 class="modal-title">
-                            打开流程模版文件
+                            选择参与者
                         </h4>
                     </div>
                     <div class="modal-body"></div>
@@ -26,116 +26,229 @@ export default class OpenDialog{
         this.initBody(body,footer);
     }
     initBody(body,footer){
-        this.providers=[];
+        this.providerMap=new Map();
+        this.tip=$(`<span>当前应用中实现了com.bstek.uflo.process.assign.AssigneeProvider接口的的任务处理人提供者在下面的列表当中，选择一条继续</span>`);
+        body.append(this.tip);
+        body.append(`<div class="form-group"></div>`);
+
         const _this=this;
-        const providerGroup=$(`<div class="form-group"><label>模版文件来源：</label></div>`);
-        body.append(providerGroup);
-        this.providerSelect=$(`<select class="form-control" style="display: inline-block;width: 360px;"></select>`);
-        providerGroup.append(this.providerSelect);
-        this.providerSelect.change(function(){
-            const value=$(this).val();
-            let target=null;
-            for(let p of _this.providers){
-                if(p.name===value){
-                    target=p;
-                    break;
-                }
-            }
-            if(target==null){
-                throw `${value} provider not exist!`;
-            }
-            _this.loadFiles(target);
-        });
-        const table=$(`<table class="table table-bordered">
-            <thead>
-                <tr style="background: #eeeeee">
-                    <td>文件名</td>
-                    <td style="width: 150px">修改日期</td>
-                    <td style="width: 50px">打开</td>
-                    <td style="width: 50px">删除</td>
-                </tr>
-            </thead>
+        this.providerSelect=$(`<select class="form-control" size="10"></select>`);
+        body.append(this.providerSelect);
+
+        this.prevButton=$(`<button type="button" class="btn btn-default">上一步</button>`);
+        footer.append(this.prevButton);
+        this.nextButton=$(`<button type="button" class="btn btn-default">下一步</button>`);
+        footer.append(this.nextButton);
+
+        this.tableContainer=$(`<div class="form-group"></div>`);
+        this.assignTable=$(`<table class="table table-bordered"><thead>
+            <tr style="background: #eeeeee"><td>ID</td><td>名称</td><td style="50px">选择</td></tr></thead>
         </table>`);
-        this.tableBody=$(`<tbody></tbody>`);
-        table.append(this.tableBody);
-        body.append(table);
+        this.assignTableBody=$(`<tbody></tbody>`);
+        this.assignTable.append(this.assignTableBody);
+        this.tableContainer.append(this.assignTable);
+        body.append(this.tableContainer);
+        this.pageGroup=$(`<div class="form-group"><label>翻页：</label></div>`);
+        this.tableContainer.append(this.pageGroup);
+
+        this.treeContainer=$(`<div class="tree" style="margin-left: 10px"></div>`);
+        body.append(this.treeContainer);
+        this.tree=$(`<ul style="padding-left: 10px;"></ul>`);
+        this.treeContainer.append(this.tree);
+
+        this.prevButton.click(()=>{
+            this.tableContainer.hide();
+            this.treeContainer.hide();
+            this.providerSelect.show();
+            this.tip.show();
+            this.prevButton.attr("disabled",true);
+            this.nextButton.attr("disabled",false);
+        });
+        this.nextButton.click(()=>{
+            const providerId=this.providerSelect.val();
+            if(!providerId){
+                MsgBox.alert('请先选择一个参与对象提供者！');
+                return;
+            }
+            const provider=this.providerMap.get(providerId);
+            if(!provider){
+                MsgBox.alert('参数对象提供者不存在！');
+                return;
+            }
+            this.tip.hide();
+            this.providerSelect.hide();
+            if(provider.tree){
+                this.treeContainer.show();
+                this.tableContainer.hide();
+                this.buildTree(provider);
+            }else{
+                this.tableContainer.show();
+                this.treeContainer.hide();
+                this.buildAssignTable(provider);
+            }
+            this.prevButton.attr("disabled",false);
+            this.nextButton.attr("disabled",true);
+        });
     }
-    loadFiles(provider){
+
+    buildTree(provider){
+        const url=window._server+"/assignproviderlist";
         const _this=this;
-        this.tableBody.empty();
-        const url=window._server+'/designer/loadProcessProviderFiles';
         $.ajax({
             url,
-            data:{name:provider.name},
             type:'POST',
-            success:function(files){
-                _this.buildTable(files,provider);
-            },
-            error:function(){
-                MsgBox.alert(`加载${provider.name}中流程模版文件失败！`);
+            data:{providerId:provider.providerId},
+            success:function(data){
+                _this.tree.empty();
+                for(let d of data.assignees || []){
+                    _this.buildTreeNode(_this.tree,d);
+                }
             }
-        });
+        })
     }
 
-    buildTable(files,provider){
-        for(let file of files){
-            const tr=$(`<tr><td>${file.name}</td><td>${file.updateDate}</td></tr>`);
-            const openTD=$(`<td></td>`);
-            tr.append(openTD);
-            const openIcon=$(`<i class="glyphicon glyphicon-folder-open" style="color: green;cursor: pointer"></i>`);
-            openTD.append(openIcon);
-            openIcon.click(function(){
-                const fullName=provider.prefix+file.name;
-                const url=window._server+'/designer?p='+fullName;
-                window.open(url,'_self');
+    buildTreeNode(parent,nodeData){
+        const li=$(`<li></li>`);
+        parent.append(li);
+        if(nodeData.chosen){
+            const node=$(`<span><a href="###"><i class="uflo uflo-minus"></i> ${nodeData.name}</a></span>`);
+            li.append(node);
+            node.click(()=>{
+                const result=this.callback.call(this,{providerId:nodeData.providerId,id:nodeData.id,name:nodeData.name});
+                if(result){
+                    this.dialog.modal('hide');
+                }
             });
-
-            const delTD=$(`<td></td>`);
-            tr.append(delTD);
-            const delIcon=$(`<i class="glyphicon glyphicon-trash" style="color: red;cursor: pointer"></i>`);
-            delTD.append(delIcon);
-            delIcon.click(function(){
-                MsgBox.confirm(`真的要删除文件[${file.name}]吗？`,function(){
-                    const url=window._server+'/designer/deleteFile';
-                    $.ajax({
-                        url,
-                        data:{fileName:file.name,providerName:provider.name},
-                        type:'POST',
-                        success:function(){
-                            tr.remove();
-                        },
-                        error:function(){
-                            MsgBox.alert('删除操作失败！');
-                        }
-                    });
-                });
+        }else{
+            const _this=this;
+            const node=$(`<span>${nodeData.name}</span>`);
+            li.append(node);
+            const open=$(`<i class="uflo uflo-plus" style="color: #005fd3;cursor: pointer;margin-right:2px"></i>`);
+            node.prepend(open);
+            let ul=$(`<ul></ul>`);
+            li.append(ul);
+            let isopen=false;
+            open.click(function(){
+                if(isopen){
+                    isopen=false;
+                    open.removeClass('uflo-minus');
+                    open.addClass('uflo-plus');
+                    ul.empty();
+                }else{
+                    isopen=true;
+                    _this.buildTreeChildren(ul,nodeData.providerId,nodeData.id);
+                    open.removeClass('uflo-plus');
+                    open.addClass('uflo-minus');
+                }
             });
-            this.tableBody.append(tr);
         }
     }
 
-    show(){
-        this.dialog.modal('show');
-        this.providerSelect.empty();
+    buildTreeChildren(parent,providerId,id){
+        const url=window._server+"/assignproviderlist";
         const _this=this;
-        const url=window._server+'/designer/loadProcessProviders';
         $.ajax({
             url,
+            data:{providerId,parentId:id},
             type:'POST',
             success:function(data){
-                let index=0;
-                _this.providers=data;
-                for(let item of data){
-                    _this.providerSelect.append(`<option ${index===0 ? 'checked' : ''}>${item.name}</option>`);
-                    if(index===0){
-                        _this.loadFiles(item);
-                    }
-                    index++;
+                for(let d of data.assignees || []){
+                    _this.buildTreeNode(parent,d);
                 }
-            },
-            error:function(){
-                MsgBox.alert('加载流程模版存储提供者列表失败！');
             }
         });
+    }
+
+    buildAssignTable(provider){
+        this.assignTableBody.empty();
+        const pageSize=10;
+        const totalPage=parseInt(provider.count/pageSize) + ((provider.count % pageSize) > 0 ? 1 : 0);
+        if(this.pageSelect){
+            this.pageSelect.remove();
+        }
+        this.pageSelect=$(`<select class="form-control" style="display: inline-block;width: inherit;"></select>`);
+        this.pageGroup.append(this.pageSelect);
+        for(let i=1;i<=totalPage;i++){
+            const option=$(`<option>${i}</option>`);
+            this.pageSelect.append(option);
+        }
+        const _this=this;
+        this.pageSelect.change(function(){
+            const pageIndex=$(this).val();
+            _this.loadAssignTableData(provider.providerId,pageIndex,pageSize);
+        });
+        this.loadAssignTableData(provider.providerId,1,pageSize);
+    }
+
+    loadAssignTableData(providerId,pageIndex,pageSize){
+        const url=window._server+"/assignproviderlist";
+        const _this=this;
+        $.ajax({
+            url,
+            type:"POST",
+            data:{providerId,pageIndex,pageSize},
+            success:function(data){
+                _this.buildAssignTableData(data);
+
+            },
+            error:function(){
+                alert('加载数据失败！');
+            }
+        });
+    }
+
+    buildAssignTableData(data){
+        this.assignTableBody.empty();
+        for(let d of data.assignees || []){
+            const tr=$(`<tr><td>${d.id}</td><td>${d.name}</td></tr>`);
+            const selectTD=$(`<td style="width: 60px"></td>`);
+            tr.append((selectTD));
+            const selectIcon=$(`<i class="glyphicon glyphicon-hand-up" style="color: green;font-size: 14pt;cursor: pointer"></i>`);
+            selectTD.append(selectIcon);
+            this.assignTableBody.append(tr);
+            selectIcon.click(()=>{
+                const result=this.callback.call(this,{providerId:d.providerId,id:d.id,name:d.name});
+                if(result){
+                    this.dialog.modal('hide');
+                }
+            });
+        }
+    }
+
+    loadProviders(){
+        const _this=this;
+        const url=window._server+'/assignproviderlist';
+        $.ajax({
+            url,
+            data:{},
+            type:'POST',
+            success:function(data){
+                _this.buildSelect(data);
+            },
+            error:function(){
+                MsgBox.alert(`加载任务参与者失败！`);
+            }
+        });
+    }
+
+    buildSelect(data){
+        this.providerSelect.empty();
+        this.providerMap.clear();
+        for(let provider of data){
+            let newOption=$(`<option value="${provider.providerId}">${provider.name}</option>`);
+            this.providerSelect.append(newOption);
+            this.providerMap.set(provider.providerId,provider);
+        }
+    }
+
+    show(callback){
+        this.dialog.modal('show');
+        this.loadProviders();
+        this.tableContainer.hide();
+        this.treeContainer.hide();
+        this.providerSelect.show();
+        this.prevButton.attr("disabled",true);
+        this.nextButton.attr("disabled",false);
+        this.callback=callback;
     }
 }

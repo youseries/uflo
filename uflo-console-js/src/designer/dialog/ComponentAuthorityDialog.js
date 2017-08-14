@@ -3,7 +3,7 @@
  */
 import {MsgBox} from 'flowdesigner';
 
-export default class CustomDataDialog{
+export default class ComponentAuthorityDialog{
     constructor(){
         this.dialog=$(`<div class="modal fade" role="dialog" aria-hidden="true" style="z-index: 10000">
             <div class="modal-dialog">
@@ -13,7 +13,7 @@ export default class CustomDataDialog{
                             &times;
                         </button>
                         <h4 class="modal-title">
-                            自定义数据
+                            组件权限信息
                         </h4>
                     </div>
                     <div class="modal-body"></div>
@@ -26,28 +26,32 @@ export default class CustomDataDialog{
         this.initBody(body,footer);
     }
     initBody(body,footer){
-        const nameGroup=$(`<div class="form-group uflo-group"><label>键：</label></div>`);
+        const nameGroup=$(`<div class="form-group uflo-group"><label>组件名称：</label></div>`);
         body.append(nameGroup);
         this.nameEditor=$(`<input type="text" class="form-control uflo-text-editor" style="width: 530px;">`);
         nameGroup.append(this.nameEditor);
 
-        const valueGroup=$(`<div class="form-group uflo-group"><label>值：</label></div>`);
+        const valueGroup=$(`<div class="form-group uflo-group"><label>权限：</label></div>`);
         body.append(valueGroup);
-        this.valueEditor=$(`<input type="text" class="form-control uflo-text-editor" style="width: 530px;">`);
-        valueGroup.append(this.valueEditor);
+        this.authoritySelect=$(`<select class="form-control uflo-text-editor" style="width: 530px;">
+            <option value="Read">只读</option>
+            <option value="ReadAndWrite">可操作</option>
+            <option value="Hide">不可见</option>
+        </select>`);
+        valueGroup.append(this.authoritySelect);
 
         const saveButton=$(`<button type="button" class="btn btn-default">保存</button>`);
         footer.append(saveButton);
         saveButton.click(()=>{
             if(!this.nameEditor.val() || this.nameEditor.val()===''){
-                MsgBox.alert('请输入键');
+                MsgBox.alert('请输入组件名称');
                 return;
             }
-            if(!this.valueEditor.val() || this.valueEditor.val()===''){
-                MsgBox.alert('请输入值');
+            if(!this.authoritySelect.val() || this.authoritySelect.val()===''){
+                MsgBox.alert('请选择权限信息');
                 return;
             }
-            this.callback.call(this,{key:this.nameEditor.val(),value:this.valueEditor.val()});
+            this.callback.call(this,{component:this.nameEditor.val(),authority:this.authoritySelect.val()});
             this.dialog.modal('hide');
         });
     }
@@ -55,7 +59,7 @@ export default class CustomDataDialog{
     show(data,callback){
         this.dialog.modal('show');
         this.callback=callback;
-        this.nameEditor.val(data.key);
-        this.valueEditor.val(data.value);
+        this.nameEditor.val(data.component);
+        this.authoritySelect.val(data.authority);
     }
 }

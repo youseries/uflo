@@ -14,12 +14,14 @@ export default class BaseNode extends Node{
                 return 'fork';
             case "JoinNode":
                 return 'join';
-            case "PackageNode":
-                return 'rule-package';
-            case "RuleNode":
-                return 'rule';
-            case "ScriptNode":
-                return 'script';
+            case "TaskNode":
+                return 'task';
+            case "ForeachNode":
+                return 'foreach';
+            case "SubprocessNode":
+                return 'subprocess';
+            case "EndNode":
+                return 'end';
             case "StartNode":
                 return 'start';
             default:
@@ -28,6 +30,9 @@ export default class BaseNode extends Node{
     }
 
     initFromJson(json){
+        for(let name in json){
+            this[name]=json[name];
+        }
         const {width,height}=json;
         if(parseInt(width)<30){
             json.width=30;
@@ -86,12 +91,21 @@ export default class BaseNode extends Node{
             }
             i++;
         }
-        let xml=`<connection g="${pathInfo}" type="${json.type}" to="${json.to}"`;
+        let xml=`<sequence-flow g="${pathInfo}" type="${json.type}" to="${json.to}"`;
         if(json.name){
             xml+=` name="${json.name}"`;
         }
+        if(json.conditionType){
+            xml+=` condition-type="${json.conditionType}"`;
+        }
+        if(json.expression){
+            xml+=` expression="${json.expression}"`;
+        }
+        if(json.handlerBean){
+            xml+=` handler-bean="${json.handlerBean}"`;
+        }
         xml+='>';
-        xml+='</connection>';
+        xml+='</sequence-flow>';
         return xml;
     }
 
@@ -101,8 +115,11 @@ export default class BaseNode extends Node{
         xml+=`y="${json.y}" `;
         xml+=`width="${json.w}" `;
         xml+=`height="${json.h}" `;
-        if(this.eventBean){
-            xml+=`event-bean="${this.eventBean}"`;
+        if(this.eventHandlerBean){
+            xml+=` event-handler-bean="${this.eventHandlerBean}"`;
+        }
+        if(this.label){
+            xml+=` label="${this.label}"`;
         }
         return xml;
     }
