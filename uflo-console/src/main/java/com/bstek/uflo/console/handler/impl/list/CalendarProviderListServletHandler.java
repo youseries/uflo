@@ -17,8 +17,8 @@ package com.bstek.uflo.console.handler.impl.list;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -38,7 +38,8 @@ import com.bstek.uflo.utils.EnvironmentUtils;
  * @since 2016年12月8日
  */
 public class CalendarProviderListServletHandler extends WriteJsonServletHandler implements ApplicationContextAware{
-	private List<CalendarInfo> providers=new ArrayList<CalendarInfo>();
+	private Collection<CalendarProvider> calendarProviders=null;
+	
 	private boolean debug;
 	@Override
 	public void execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -46,18 +47,21 @@ public class CalendarProviderListServletHandler extends WriteJsonServletHandler 
 		if(loginUser==null && !debug){
 			throw new IllegalArgumentException("Current run mode is not debug.");			
 		}
-		writeObjectToJson(resp, providers);
+		writeObjectToJson(resp, buildCalendarInfos());
+	}
+	
+	private List<CalendarInfo> buildCalendarInfos(){
+		List<CalendarInfo> providers=new ArrayList<CalendarInfo>();
+		for(CalendarProvider provider:calendarProviders){
+			providers.addAll(provider.getCalendarInfos());				
+		}
+		return providers;
 	}
 	
 	@Override
 	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-		Map<String,CalendarProvider> providerMap=applicationContext.getBeansOfType(CalendarProvider.class);
-		for(String id:providerMap.keySet()){
-			List<CalendarInfo> list=providerMap.get(id).getCalendarInfos();
-			if(list!=null && list.size()>0){
-				providers.addAll(list);				
-			}
-		}
+		calendarProviders=applicationContext.getBeansOfType(CalendarProvider.class).values();
+		
 	}
 	
 	public void setDebug(boolean debug) {

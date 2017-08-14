@@ -55,7 +55,7 @@ public class TodoServletHandler extends RenderPageServletHandler {
 			context.put("contextPath", req.getContextPath());
 			resp.setContentType("text/html");
 			resp.setCharacterEncoding("utf-8");
-			Template template=ve.getTemplate("html/todo.html","utf-8");
+			Template template=ve.getTemplate("uflo-html/todo.html","utf-8");
 			PrintWriter writer=resp.getWriter();
 			template.merge(context, writer);
 			writer.close();

@@ -133,7 +133,7 @@ public class ProcessDiagramServletHandler extends RenderPageServletHandler{
 			context.put("parameters",sb.toString());
 			resp.setContentType("text/html");
 			resp.setCharacterEncoding("utf-8");
-			Template template=ve.getTemplate("html/diagram.html","utf-8");
+			Template template=ve.getTemplate("uflo-html/diagram.html","utf-8");
 			PrintWriter writer=resp.getWriter();
 			template.merge(context, writer);
 			writer.close();

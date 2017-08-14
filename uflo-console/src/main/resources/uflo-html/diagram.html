@@ -11,9 +11,11 @@
 <script type="text/javascript">
 	window._server="${contextPath}/uflo";
 </script>
-<script type="text/javascript" src="${contextPath}/uflo/res/uflo-asserts/venderjs/ProcessDiagram.js"></script>
+<script type="text/javascript" src="${contextPath}/uflo/res/uflo-asserts/js/diagram.bundle.js"></script>
 <script type="text/javascript">
-	(new ProcessDiagram()).show('container',${parameters},window._server);
+	$(document).ready(function(){
+		(new ProcessDiagram()).show('container',${parameters},window._server);		
+	});
 </script>
 </body>
 </html>

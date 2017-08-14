@@ -12,6 +12,10 @@
 		<property name="taskService" ref="uflo.taskService"></property>
 		<property name="historyService" ref="uflo.historyService"></property>
 	</bean>
+	
+	<bean id="uflo.designerServletHandler" class="com.bstek.uflo.console.handler.impl.designer.DesignerServletHandler">
+		<property name="processService" ref="uflo.processService"></property>
+	</bean>
 
 	<bean id="uflo.console.centralServletHandler" class="com.bstek.uflo.console.handler.impl.central.CentralServletHandler">
 		<property name="taskService" ref="uflo.taskService"></property>
@@ -50,6 +54,13 @@
 			<value>classpath:uflo-console-configure.properties</value>
 		</property>
 	</bean>
+	
+	<bean id="uflo.defaultFileProcessProvider" class="com.bstek.uflo.console.provider.DefaultFileProcessProvider">
+		<property name="fileStoreDir" value="${uflo.defaultFileStoreDir}"></property>
+		<property name="disabled" value="${uflo.disableDefaultFileProcessProvider}"></property>
+	</bean>
+	
+	<bean id="uflo.processProviderUtils" class="com.bstek.uflo.console.provider.ProcessProviderUtils"></bean>
 
 	<bean class="com.bstek.uflo.console.handler.impl.diagram.ProcessDiagramServletHandler">
 		<property name="processService" ref="uflo.processService"></property>

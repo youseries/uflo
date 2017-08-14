@@ -72,7 +72,7 @@ public class CentralServletHandler extends RenderPageServletHandler{
 			context.put("contextPath", req.getContextPath());
 			resp.setContentType("text/html");
 			resp.setCharacterEncoding("utf-8");
-			Template template=ve.getTemplate("html/central.html","utf-8");
+			Template template=ve.getTemplate("uflo-html/central.html","utf-8");
 			PrintWriter writer=resp.getWriter();
 			template.merge(context, writer);
 			writer.close();

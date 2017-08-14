@@ -58,7 +58,7 @@ public class CalendarServletHandler extends RenderPageServletHandler {
 			context.put("contextPath", req.getContextPath());
 			resp.setContentType("text/html");
 			resp.setCharacterEncoding("utf-8");
-			Template template=ve.getTemplate("html/calendar.html","utf-8");
+			Template template=ve.getTemplate("uflo-html/calendar.html","utf-8");
 			PrintWriter writer=resp.getWriter();
 			template.merge(context, writer);
 			writer.close();
