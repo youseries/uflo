@@ -24,7 +24,7 @@ import com.bstek.uflo.deploy.validate.Validator;
 
 /**
  * @author Jacky
- * @date 2013年9月15日
+ * @since 2013年9月15日
  */
 public abstract class NodeValidator implements Validator {
 

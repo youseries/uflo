@@ -17,7 +17,7 @@ package com.bstek.uflo.process.node;
 
 /**
  * @author Jacky
- * @date 2013年9月24日
+ * @since 2013年9月24日
  */
 public class Mapping implements java.io.Serializable{
 	private static final long serialVersionUID = -1347697162337032126L;

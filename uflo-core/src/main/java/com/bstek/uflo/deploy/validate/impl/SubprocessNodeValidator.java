@@ -24,7 +24,7 @@ import com.bstek.uflo.process.node.SubprocessType;
 
 /**
  * @author Jacky
- * @date 2013年9月15日
+ * @since 2013年9月15日
  */
 public class SubprocessNodeValidator extends NodeValidator {
 

@@ -56,7 +56,7 @@ public class SequenceFlowParser implements Parser {
 				g=null;
 			}
 		}
-		flow.setG(element.attributeValue("g"));
+		flow.setG(g);
 		return flow;
 	}
 

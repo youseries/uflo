@@ -166,7 +166,7 @@ public interface ProcessService {
 	/**
 	 * 删除指定流程实例ID中指定key的流程变量值
 	 * @param key 流程变量的key
-	 * @param processInsanceId 流程实例ID
+	 * @param processInstanceId 流程实例ID
 	 */
 	void deleteProcessVariable(String key,long processInstanceId);
 	

@@ -45,7 +45,7 @@ public interface AssigneeProvider {
 	 * 根据指定的处理人ID，返回具体的任务处理人用户名
 	 * @param entityId 处理人ID，可能是一个用户的用户名，这样就是直接返回这个用户名，也可能是一个部门的ID，那么就是返回这个部门下的所有用户的用户名等 
 	 * @param context context 流程上下文对象
-	 * @param ProcessInstance processInstance 流程实例对象
+	 * @param processInstance 流程实例对象
 	 * @return 返回一个或多个任务处理人的ID
 	 */
 	Collection<String> getUsers(String entityId,Context context,ProcessInstance processInstance);

@@ -253,7 +253,6 @@ public interface TaskService {
 	 * 完成指定ID的任务，回退到指定的目标节点
 	 * @param taskId 任务ID
 	 * @param targetNodeName 指定的目标节点名称
-	 * @param variables 变量集合
 	 */
 	void rollback(long taskId,String targetNodeName);
 	
@@ -302,14 +301,14 @@ public interface TaskService {
 	/**
 	 * 判断当前任务是否可被撤回到上一任务节点
 	 * @param taskId 任务的ID
-	 * @return
+	 * @return 返回布尔值
 	 */
 	boolean canWithdraw(long taskId);
 	
 	/**
 	 * 判断当前任务是否可回退到上一任务节点
 	 * @param task 任务对象
-	 * @return
+	 * @return 返回布尔值
 	 */
 	boolean canWithdraw(Task task);
 	
@@ -329,7 +328,6 @@ public interface TaskService {
 	/**
 	 * 对认领后的任务进行释放，从而允许其它人认领
 	 * @param taskId 要释放任务的ID
-	 * @param username 任务的释放人
 	 */
 	void release(long taskId);
 	/**
@@ -362,13 +360,11 @@ public interface TaskService {
 	/**
 	 * 将一个任务挂起
 	 * @param taskId 要挂起的任务的ID
-	 * @param username 扶起任务的人的用户名
 	 */
 	void suspend(long taskId);
 	/**
 	 * 让处于挂起状态的任务恢复正常
 	 * @param taskId 要操作的任务的ID
-	 * @param username
 	 */
 	void resume(long taskId);
 	

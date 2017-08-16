@@ -19,7 +19,7 @@ import org.w3c.dom.Element;
 
 /**
  * @author Jacky
- * @date 2013年9月15日
+ * @since 2013年9月15日
  */
 public class ForkNodeValidator extends NodeValidator {
 
