@@ -31,4 +31,29 @@
 			<version>1.7</version>
 		</dependency>
 	</dependencies>
+	<licenses>
+		<license>
+			<name>The Apache License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+		</license>
+	</licenses>
+	<developers>
+		<developer>
+			<name>Gaojie</name>
+			<email>jacky.gao@bstek.com</email>
+			<organization>Bstek</organization>
+			<organizationUrl>http://www.bstek.com</organizationUrl>
+		</developer>
+	</developers>
+	<scm>
+		<connection>https://github.com/youseries/uflo.git</connection>
+		<developerConnection>https://github.com/youseries/uflo.git</developerConnection>
+		<url>https://github.com/youseries/uflo</url>
+	</scm>
+	<organization>
+		<name>Bstek</name>
+		<url>http://www.bstek.com</url>
+	</organization>	
+	<name>UFLO2 Console Project</name>
+	<url>https://github.com/youseries/uflo/tree/master/uflo-console</url>	
 </project>
