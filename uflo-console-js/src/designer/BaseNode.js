@@ -91,6 +91,7 @@ export default class BaseNode extends Node{
             }
             i++;
         }
+        if(pathInfo!=='')pathInfo+=':';
         let xml=`<sequence-flow g="${pathInfo}" type="${json.type}" to="${json.to}"`;
         if(json.name){
             xml+=` name="${json.name}"`;

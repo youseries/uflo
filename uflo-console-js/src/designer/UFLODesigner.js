@@ -3,6 +3,7 @@
  */
 import {Node,FlowDesigner,MsgBox} from 'flowdesigner';
 import BaseNode from './BaseNode.js';
+import EventSelectDialog from './dialog/EventSelectDialog.js';
 
 export default class UfloDesigner extends FlowDesigner{
     constructor(containerId) {
@@ -139,13 +140,21 @@ export default class UfloDesigner extends FlowDesigner{
 
         const eventGroup=$(`<div class="form-group"><label>事件Bean：</label></div>`);
         g.append(eventGroup);
-        const eventText=$(`<input type="text" class="form-control uflo-text-editor" style="width: 240px">`);
+        const tip="一个实现了com.bstek.uflo.process.handler.ProcessEventHandler接口并配置到Spring中的Bean ID"
+        const eventText=$(`<input type="text" class="form-control uflo-text-editor" title="${tip}" style="width: 240px">`);
         eventGroup.append(eventText);
         eventText.val(target.eventHandlerBean);
         const eventSelectButton=$(`<button type="button" class="btn btn-default" style="height: 26px;padding-top: 2px;margin-left: 2px;">选择</button>`);
         eventGroup.append(eventSelectButton);
         eventText.change(function(){
             target.eventHandlerBean=$(this).val();
+        });
+        const dialog=new EventSelectDialog(`选择${tip}`);
+        eventSelectButton.click(function(){
+            dialog.show('ProcessEventHandler',function(beanId){
+                target.eventHandlerBean=beanId;
+                eventText.val(beanId);
+            });
         });
 
         const categoryGroup=$(`<div class="form-group"><label>分类ID：</label></div>`);
