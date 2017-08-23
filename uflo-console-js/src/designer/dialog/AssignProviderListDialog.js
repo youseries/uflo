@@ -161,18 +161,13 @@ export default class AssignProviderListDialog{
 
     buildAssignTable(provider){
         this.assignTableBody.empty();
-        const pageSize=10;
-        const totalPage=parseInt(provider.count/pageSize) + ((provider.count % pageSize) > 0 ? 1 : 0);
         if(this.pageSelect){
             this.pageSelect.remove();
         }
         this.pageSelect=$(`<select class="form-control" style="display: inline-block;width: inherit;"></select>`);
         this.pageGroup.append(this.pageSelect);
-        for(let i=1;i<=totalPage;i++){
-            const option=$(`<option>${i}</option>`);
-            this.pageSelect.append(option);
-        }
         const _this=this;
+        const pageSize=10;
         this.pageSelect.change(function(){
             const pageIndex=$(this).val();
             _this.loadAssignTableData(provider.providerId,pageIndex,pageSize);
@@ -188,7 +183,7 @@ export default class AssignProviderListDialog{
             type:"POST",
             data:{providerId,pageIndex,pageSize},
             success:function(data){
-                _this.buildAssignTableData(data);
+                _this.buildAssignTableData(data,pageIndex);
 
             },
             error:function(){
@@ -197,7 +192,7 @@ export default class AssignProviderListDialog{
         });
     }
 
-    buildAssignTableData(data){
+    buildAssignTableData(data,pageIndex){
         this.assignTableBody.empty();
         for(let d of data.assignees || []){
             const tr=$(`<tr><td>${d.id}</td><td>${d.name}</td></tr>`);
@@ -212,6 +207,12 @@ export default class AssignProviderListDialog{
                     this.dialog.modal('hide');
                 }
             });
+        }
+        this.pageSelect.empty();
+        const pageSize=10;
+        const totalPage=parseInt(data.count/pageSize) + ((data.count % pageSize) > 0 ? 1 : 0);
+        for(let i=1;i<=totalPage;i++){
+            this.pageSelect.append(`<option ${i==pageIndex ? 'selected' : ''}>${i}</option>`);
         }
     }
 

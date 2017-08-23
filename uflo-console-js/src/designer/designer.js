@@ -75,16 +75,16 @@ function buildButtons(designer){
         icon:'<i class="uflo uflo-save"></i>',
         tip:'保存流程模版文件',
         click:function(){
+            const content=designer.toXML();
+            if(!content){
+                return;
+            }
             if(!designer.processFile){
                 saveDialog.show(designer,function(fileName){
                     designer.processFile=fileName;
                     designer.setInfo(fileName);
                 });
             }else{
-                const content=designer.toXML();
-                if(!content){
-                    return;
-                }
                 const url=window._server+'/designer/saveFile';
                 const name=designer.processFile;
                 $.ajax({
@@ -104,6 +104,10 @@ function buildButtons(designer){
         icon:'<i class="uflo uflo-saveas"></i>',
         tip:'另存流程模版文件',
         click:function(){
+            const content=designer.toXML();
+            if(!content){
+                return;
+            }
             saveDialog.show(designer,function(fileName){
                 designer.processFile=fileName;
                 designer.setInfo(fileName);
