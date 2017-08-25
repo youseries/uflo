@@ -234,6 +234,14 @@ public class SchedulerServiceImpl implements SchedulerService,ApplicationContext
 		}
 	}
 
+	public void destroy(){
+		try{
+			if(scheduler!=null && !scheduler.isShutdown()){
+				scheduler.shutdown(false);
+			}			
+		}catch(Exception ex){}
+	}
+	
 	public void setTaskService(TaskService taskService) {
 		this.taskService = taskService;
 	}

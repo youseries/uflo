@@ -22,7 +22,9 @@
 	<bean id="uflo.commandService" class="com.bstek.uflo.command.impl.SpringTransactionCommandService" depends-on="uflo.environmentUtils">
 	</bean>
 	
-	<bean id="uflo.props" class="com.bstek.uflo.UfloPropertyPlaceholderConfigurer" abstract="true"></bean>
+	<bean id="uflo.props" class="com.bstek.uflo.UfloPropertyPlaceholderConfigurer" abstract="true">
+		<property name="ignoreUnresolvablePlaceholders" value="true"></property>
+	</bean>
 	
 	<bean id="uflo.processDeployer" class="com.bstek.uflo.deploy.impl.DefaultProcessDeployer">
 		<property name="commandService" ref="uflo.commandService"></property>	
@@ -62,7 +64,7 @@
 		<property name="disabledUserAssigneeProvider" value="${uflo.disabledUserAssigneeProvider}"></property>
 	</bean>
 	
-	<bean id="uflo.schedulerService" class="com.bstek.uflo.service.impl.SchedulerServiceImpl" depends-on="uflo.processParser">
+	<bean id="uflo.schedulerService" class="com.bstek.uflo.service.impl.SchedulerServiceImpl" depends-on="uflo.processParser" destroy-method="destroy">
 		<property name="taskService" ref="uflo.taskService"></property>
 		<property name="processService" ref="uflo.processService"></property>
 		<property name="threadCount" value="${uflo.jobThreadCount}"></property>
