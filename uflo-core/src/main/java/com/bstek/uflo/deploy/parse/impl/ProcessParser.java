@@ -139,6 +139,5 @@ public class ProcessParser extends AbstractParser{
 	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
 		super.setApplicationContext(applicationContext);
 		ProcessParser.processParser=this;
-		new ApplicationTracker(applicationContext).start();
 	}
 }
