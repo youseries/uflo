@@ -155,12 +155,12 @@ public class CentralServletHandler extends RenderPageServletHandler{
 		List<JumpNode> nodes=taskService.getAvaliableForwardTaskNodes(taskId);
 		writeObjectToJson(resp, nodes);
 	}
-	public void cliamTask(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	public void claimTask(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		long taskId=Long.valueOf(req.getParameter("taskId"));
 		String user=req.getParameter("user");
 		taskService.claim(taskId, user);
 	}
-	public void loadCliamUsers(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	public void loadClaimUsers(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		long taskId=Long.valueOf(req.getParameter("taskId"));
 		List<TaskParticipator> list=taskService.getTaskParticipators(taskId);
 		writeObjectToJson(resp, list);
