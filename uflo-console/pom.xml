@@ -11,7 +11,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>com.bstek.uflo</groupId>
-			<artifactId>uflo-core</artifactId>
+			<artifactId>uflo-core-hibernate4</artifactId>
 			<version>2.0.2-SNAPSHOT</version>
 		</dependency>
 		<dependency>
