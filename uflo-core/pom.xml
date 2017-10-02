@@ -5,8 +5,8 @@
 	<version>2.0.2-SNAPSHOT</version>
 	<parent>
 		<groupId>com.bstek.uflo</groupId>
-		<artifactId>uflo-parent</artifactId>
-		<version>2.0.1</version>
+		<artifactId>uflo-parent-hibernate4</artifactId>
+		<version>2.0.2</version>
 	</parent>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
