@@ -104,8 +104,12 @@ export default class Cell extends Component{
         const dateFormat=header.dateFormat;
         let data=rowData[header.name];
         if(dateFormat){
-            var d=new Date(data);
-            data=formatDate(d,dateFormat);
+            if(data){
+                var d=new Date(data);
+                data=formatDate(d,dateFormat);
+            }else{
+                data='';
+            }
         }
         if(data && (typeof data === 'object')){
             data=JSON.stringify(data);
