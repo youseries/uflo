@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.bstek.uflo</groupId>
   <artifactId>uflo-parent</artifactId>
-  <version>2.0.1</version>
+  <version>2.0.2</version>
   <properties>
 	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
@@ -163,7 +163,7 @@
 	<name>UFLO2 Parent Project</name>
 	<url>https://github.com/youseries/uflo/tree/master/uflo-parent</url>
 	<issueManagement>
-		<url>${jira.browse.url}/VELOCITY</url>
+		<url>https://github.com/youseries/uflo/issues</url>
 	</issueManagement>
 	<description>UFLO2 Parent Project</description> 
 </project>
