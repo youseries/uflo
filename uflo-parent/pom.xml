@@ -162,7 +162,7 @@
 	<name>UFLO2 Parent Project</name>
 	<url>https://github.com/youseries/uflo/tree/master/uflo-parent</url>
 	<issueManagement>
-		<url>${jira.browse.url}/VELOCITY</url>
+		<url>https://github.com/youseries/uflo/issues</url>
 	</issueManagement>
 	<description>UFLO2 Parent Project</description> 
 </project>
