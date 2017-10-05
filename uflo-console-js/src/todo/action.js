@@ -28,7 +28,7 @@ export function loadCliamList(pageIndex,pageSize,taskName){
         window.claimTaskName=taskName;
     }
     return function (dispatch){
-        const url=window._server+"/todo/loadCliam";
+        const url=window._server+"/todo/loadClaim";
         ajax(url,{pageIndex,pageSize,taskName},function(data){
             dispatch({type:LOAD_CLIAM_LIST,data});
         });
@@ -42,7 +42,7 @@ export function claimTask(pageIndex,pageSize,taskId,taskName){
         window.claimTaskName=taskName;
     }
     return function (dispatch){
-        const url=window._server+"/todo/cliamTask";
+        const url=window._server+"/todo/claimTask";
         ajax(url,{taskId},function(){
            dispatch(loadCliamList(pageIndex,pageSize,taskName));
         });
