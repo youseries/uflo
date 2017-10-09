@@ -30,7 +30,7 @@ export default class TaskNode extends BaseNode{
             xml+=` url="${this.url}"`;
         }
         if(this.taskListenerBean){
-            xml+=` task-listener-bean=${this.taskListenerBean}`;
+            xml+=` task-listener-bean="${this.taskListenerBean}"`;
         }
         if(this.assignmentType){
             xml+=` assignment-type="${this.assignmentType}"`;
