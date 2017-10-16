@@ -26,6 +26,9 @@ export function ajax(url,data,successCallback,errorCallback){
     });
 };
 export function formatDate(date,format){
+    if(!date || date===''){
+        return '';
+    }
     if(typeof date === 'number'){
         date=new Date(date);
     }

@@ -40,6 +40,7 @@ import com.bstek.uflo.process.handler.ForeachHandler;
 import com.bstek.uflo.process.handler.NodeEventHandler;
 import com.bstek.uflo.process.handler.ProcessEventHandler;
 import com.bstek.uflo.process.handler.ReminderHandler;
+import com.bstek.uflo.process.listener.TaskListener;
 import com.bstek.uflo.process.node.FormTemplateProvider;
 import com.bstek.uflo.utils.EnvironmentUtils;
 
@@ -75,6 +76,7 @@ public class HandlerListServletHandler extends WriteJsonServletHandler implement
 		handerMap.put(ForeachHandler.class.getSimpleName(), applicationContext.getBeansOfType(ForeachHandler.class).keySet());
 		handerMap.put(ReminderHandler.class.getSimpleName(), applicationContext.getBeansOfType(ReminderHandler.class).keySet());
 		handerMap.put(CountersignHandler.class.getSimpleName(), applicationContext.getBeansOfType(CountersignHandler.class).keySet());
+		handerMap.put(TaskListener.class.getSimpleName(), applicationContext.getBeansOfType(TaskListener.class).keySet());
 		Set<String> set=new HashSet<String>();
 		for(FormTemplateProvider provider:applicationContext.getBeansOfType(FormTemplateProvider.class).values()){
 			set.add(provider.getFormTemplate());

@@ -61,7 +61,7 @@ public class TodoServletHandler extends RenderPageServletHandler {
 			writer.close();
 		}
 	}
-	public void cliamTask(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	public void claimTask(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String loginUsername=EnvironmentUtils.getEnvironment().getLoginUser();
 		String taskId=req.getParameter("taskId");
 		taskService.claim(Long.valueOf(taskId), loginUsername);
@@ -89,7 +89,7 @@ public class TodoServletHandler extends RenderPageServletHandler {
 		writeObjectToJson(resp, pageData);
 	}
 	
-	public void loadCliam(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	public void loadClaim(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String loginUsername=EnvironmentUtils.getEnvironment().getLoginUser();
 		int pageSize=Integer.valueOf(req.getParameter("pageSize"));
 		int pageIndex=Integer.valueOf(req.getParameter("pageIndex"));

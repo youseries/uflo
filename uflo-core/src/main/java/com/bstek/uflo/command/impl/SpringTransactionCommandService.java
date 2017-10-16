@@ -27,6 +27,7 @@ import org.springframework.transaction.support.TransactionTemplate;
 
 import com.bstek.uflo.command.Command;
 import com.bstek.uflo.command.CommandService;
+import com.bstek.uflo.env.EnvironmentProvider;
 import com.bstek.uflo.env.impl.ContextImpl;
 import com.bstek.uflo.expr.ExpressionContext;
 import com.bstek.uflo.service.IdentityService;
@@ -68,7 +69,13 @@ public class SpringTransactionCommandService implements CommandService,Applicati
 	
 	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
 		this.platformTransactionManager=EnvironmentUtils.getEnvironment().getPlatformTransactionManager();
+		if(this.platformTransactionManager==null){
+			throw new RuntimeException("The "+EnvironmentProvider.class.getName()+" implements class's method 'getPlatformTransactionManager' can not return null.");
+		}
 		this.sessionFactory=EnvironmentUtils.getEnvironment().getSessionFactory();
+		if(this.sessionFactory==null){
+			throw new RuntimeException("The "+EnvironmentProvider.class.getName()+" implements class's method 'getSessionFactory' can not return null.");
+		}
 		context=new ContextImpl();
 		context.setCommandService(this);
 		context.setApplicationContext(applicationContext);
