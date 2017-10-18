@@ -406,7 +406,13 @@ export default class TaskTool extends BaseTool{
         edit.click(function(){
             dialog.show(data,function(result){
                 nameTd.html(result.component);
-                authorityTd.html(result.authority);
+                data.component=result.component;
+                data.authority=result.authority;
+                if(result.authority==='ReadAndWrite'){
+                    authorityTd.html('可操作');
+                }else if(result.authority==='Hide'){
+                    authorityTd.html('不可见');
+                }
             });
         });
     }
