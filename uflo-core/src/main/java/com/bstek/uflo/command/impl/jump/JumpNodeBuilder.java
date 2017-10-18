@@ -47,6 +47,7 @@ public class JumpNodeBuilder {
 		JumpNode jumpNode=new JumpNode(node.getName());
 		jumpNode.setTask(true);
 		jumpNode.setLevel(1);
+		jumpNode.setLabel(node.getLabel());
 		maps.put(jumpNode.getName(), jumpNode);
 		simulation(node,jumpNode);
 		return maps;
@@ -64,6 +65,7 @@ public class JumpNodeBuilder {
 			String to=flow.getToNode();
 			Node toNode=process.getNode(to);
 			JumpNode nextJumpNode=new JumpNode(toNode.getName());
+			nextJumpNode.setLabel(toNode.getLabel());
 			if(jumpNode.getParent().size()>0){
 				nextJumpNode.getParent().addAll(jumpNode.getParent());
 			}
