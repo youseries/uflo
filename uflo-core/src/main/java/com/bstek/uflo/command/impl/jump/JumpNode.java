@@ -26,6 +26,7 @@ public class JumpNode {
 	private List<String> parent=new LinkedList<String>();
 	private int level;
 	private String name;
+	private String label;
 	private boolean isTask;
 	public JumpNode(){}
 	public JumpNode(String name) {
@@ -64,5 +65,11 @@ public class JumpNode {
 	}
 	public void setName(String name) {
 		this.name = name;
+	}
+	public String getLabel() {
+		return label;
+	}
+	public void setLabel(String label) {
+		this.label = label;
 	}
 }
