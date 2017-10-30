@@ -18,10 +18,14 @@ export default class DecisionNode  extends BaseNode{
             xml+=` handler-bean="${this.handlerBean}"`;
             xml+=` decision-type="Handler"`;
         }else{
-            xml+=` expression="${this.expression}"`;
             xml+=` decision-type="Expression"`;
         }
         xml+=`>`;
+        if(!this.handlerBean && this.expression){
+            xml+=`<expression>`;
+            xml+=`<![CDATA[${this.expression}]]>`;
+            xml+=`</expression>`;
+        }
         if(this.description){
             xml+=` <description><![CDATA[${this.description}]]></description>`;
         }

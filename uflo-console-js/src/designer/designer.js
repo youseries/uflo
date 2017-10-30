@@ -51,6 +51,7 @@ function loadFile(designer){
     const url=window._server+"/designer/openFile";
     $.ajax({
         url,
+        type:"POST",
         data:{name},
         success:(process)=>{
             designer.fromJson(process);
@@ -89,6 +90,7 @@ function buildButtons(designer){
                 const name=designer.processFile;
                 $.ajax({
                     url,
+                    type:"POST",
                     data:{fileName:name,content},
                     success:()=>{
                         MsgBox.alert('保存成功！');
