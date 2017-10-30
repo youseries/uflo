@@ -21,7 +21,6 @@ import javax.persistence.Entity;
 import javax.persistence.Transient;
 
 import org.hibernate.Session;
-import org.springframework.util.Assert;
 import org.springframework.util.SerializationUtils;
 
 import com.bstek.uflo.env.Context;
@@ -56,7 +55,6 @@ public class TextVariable extends Variable {
 	}
 	
 	public void initValue(Context context){
-		Assert.notNull(context);
 		Session session=context.getSession();
 		blob=(Blob)session.get(Blob.class,blobId);
 		text=(String)SerializationUtils.deserialize(blob.getBlobValue());
