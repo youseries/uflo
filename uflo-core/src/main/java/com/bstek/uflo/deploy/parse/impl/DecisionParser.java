@@ -15,6 +15,7 @@
  ******************************************************************************/
 package com.bstek.uflo.deploy.parse.impl;
 
+import org.apache.commons.lang.StringUtils;
 import org.dom4j.Element;
 
 import com.bstek.uflo.deploy.parse.AbstractParser;
@@ -35,7 +36,21 @@ public class DecisionParser extends AbstractParser {
 		parseNodeCommonInfo(element, node);
 		node.setSequenceFlows(parseFlowElement(element,processId,parseChildren));
 		node.setDecisionType(DecisionType.valueOf(element.attributeValue("decision-type")));
-		node.setExpression(unescape(element.attributeValue("expression")));
+		if(node.getDecisionType().equals(DecisionType.Expression)){
+			for(Object obj:element.elements()){
+				if(!(obj instanceof Element)){
+					continue;
+				}
+				Element ele=(Element)obj;
+				if(ele.getName().equals("expression")){
+					node.setExpression(ele.getText());
+					break;
+				}
+			}
+			if(StringUtils.isBlank(node.getExpression())){
+				node.setExpression(element.attributeValue("expression"));
+			}
+		}
 		node.setHandlerBean(unescape(element.attributeValue("handler-bean")));
 		NodeDiagram diagram=parseDiagram(element);
 		diagram.setIcon("/icons/decision.svg");

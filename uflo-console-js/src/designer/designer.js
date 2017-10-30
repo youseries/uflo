@@ -89,6 +89,7 @@ function buildButtons(designer){
                 const name=designer.processFile;
                 $.ajax({
                     url,
+                    type:"POST",
                     data:{fileName:name,content},
                     success:()=>{
                         MsgBox.alert('保存成功！');
@@ -126,6 +127,7 @@ function buildButtons(designer){
                 const url=window._server+'/designer/deploy';
                 $.ajax({
                     url,
+                    type:"POST",
                     data:{content},
                     success:function(){
                         MsgBox.alert('部署成功！');

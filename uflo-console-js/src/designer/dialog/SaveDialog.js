@@ -95,6 +95,7 @@ export default class SaveDialog{
             const url=window._server+'/designer/saveFile';
             $.ajax({
                 url,
+                type:"POST",
                 data:{fileName:fullName,content},
                 success:()=>{
                     if(this.callback){
