@@ -19,6 +19,8 @@ import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import com.bstek.uflo.process.node.DecisionType;
 
@@ -36,8 +38,25 @@ public class DecisionNodeValidator extends NodeValidator {
 			errors.add("路由决策节点必须要指定决策条件判断方式");
 		}else{
 			DecisionType decisionType=DecisionType.valueOf(type);
-			if(decisionType.equals(DecisionType.Expression) && StringUtils.isEmpty(element.getAttribute("expression"))){
-				errors.add("路由决策节点条件判断方式表达式时，必须要指定一个具体表达式");				
+			if(decisionType.equals(DecisionType.Expression)){
+				if(StringUtils.isEmpty(element.getAttribute("expression"))){
+					NodeList nodeList=element.getChildNodes();
+					boolean hasExpr=false;
+					for(int i=0;i<nodeList.getLength();i++){
+						Node node=nodeList.item(i);
+						if(!(node instanceof Element)){
+							continue;
+						}
+						Element childElement=(Element)node;
+						if(childElement.getNodeName().equals("expression")){
+							hasExpr=true;
+							break;
+						}
+					}
+					if(!hasExpr){
+						errors.add("路由决策节点条件判断方式表达式时，必须要指定一个具体表达式");						
+					}
+				}
 			}
 			if(decisionType.equals(DecisionType.Handler) && StringUtils.isEmpty(element.getAttribute("handler-bean"))){
 				errors.add("路由决策节点条件判断方式实现类Bean时，必须要指定一个具体实现类Bean");				
