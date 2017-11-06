@@ -34,7 +34,7 @@ import com.bstek.uflo.service.ProcessService;
  * @since 2013年7月31日
  */
 public class JoinNode extends Node {
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 6808697583212585654L;
 	private int multiplicity;
 	private int percentMultiplicity;
 	

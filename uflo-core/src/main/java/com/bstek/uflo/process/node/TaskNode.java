@@ -70,7 +70,7 @@ import com.bstek.uflo.utils.IDGenerator;
  * @since 2013年7月25日
  */
 public class TaskNode extends Node {
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -1984323879432140639L;
 	private String taskName;
 	private TaskType taskType;
 	private boolean allowSpecifyAssignee;

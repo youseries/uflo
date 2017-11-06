@@ -19,7 +19,8 @@ package com.bstek.uflo.process.security;
  * @author Jacky.gao
  * @since 2013年8月18日
  */
-public class ComponentAuthority {
+public class ComponentAuthority implements java.io.Serializable{
+	private static final long serialVersionUID = -6363638600031994289L;
 	private String component;
 	private Authority authority;
 	public ComponentAuthority(String component,Authority authority){

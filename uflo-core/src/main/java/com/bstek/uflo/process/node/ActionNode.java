@@ -24,7 +24,7 @@ import com.bstek.uflo.process.handler.ActionHandler;
  * @since 2013年8月12日
  */
 public class ActionNode extends Node {
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -3522477911199203025L;
 	private String handlerBean;
 	@Override
 	public boolean enter(Context context, ProcessInstance processInstance) {
