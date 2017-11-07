@@ -23,7 +23,7 @@ import java.util.List;
  * @since 2013年9月8日
  */
 public class NodeDiagram extends Diagram implements Cloneable{
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -7041158184263583810L;
 	private int width;
 	private int height;
 	private int x;
