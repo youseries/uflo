@@ -25,7 +25,8 @@ import com.bstek.uflo.process.node.AssignmentType;
  * @author Jacky.gao
  * @since 2013年8月12日
  */
-public class Swimlane {
+public class Swimlane implements java.io.Serializable{
+	private static final long serialVersionUID = -2899019518648252638L;
 	private String name;
 	private String description;
 	private AssignmentType assignmentType;

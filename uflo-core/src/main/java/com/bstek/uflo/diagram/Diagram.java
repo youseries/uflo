@@ -20,7 +20,7 @@ package com.bstek.uflo.diagram;
  * @since 2013年9月8日
  */
 public abstract class Diagram implements java.io.Serializable{
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -3750416786636570270L;
 	private String name;
 	private String label;
 	private String fontColor="50, 50, 50";

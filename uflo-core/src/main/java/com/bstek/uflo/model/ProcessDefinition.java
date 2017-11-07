@@ -35,7 +35,9 @@ import com.bstek.uflo.process.swimlane.Swimlane;
  */
 @Entity
 @Table(name="UFLO_PROCESS")
-public class ProcessDefinition{
+public class ProcessDefinition implements java.io.Serializable{
+	private static final long serialVersionUID = -1328642749306459546L;
+
 	@Id
 	@Column(name="ID_")
 	private long id;

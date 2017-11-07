@@ -27,7 +27,7 @@ import com.bstek.uflo.process.handler.DecisionHandler;
  * @since 2013年8月8日
  */
 public class DecisionNode extends Node {
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -6950253419921784972L;
 	private String expression;
 	private String handlerBean;
 	private DecisionType decisionType;

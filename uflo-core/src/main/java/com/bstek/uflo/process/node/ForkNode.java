@@ -32,7 +32,7 @@ import com.bstek.uflo.utils.IDGenerator;
  * @since 2013年7月31日
  */
 public class ForkNode extends Node {
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -1654058426879715199L;
 
 	@Override
 	public boolean enter(Context context, ProcessInstance processInstance) {

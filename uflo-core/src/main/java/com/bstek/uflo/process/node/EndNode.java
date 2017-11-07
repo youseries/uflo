@@ -52,7 +52,7 @@ import com.bstek.uflo.utils.ProcessListenerUtils;
  * @since 2013年7月31日
  */
 public class EndNode extends Node{
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 3694427904622957142L;
 	private boolean terminate=true;
 	@Override
 	public void cancel(Context context,ProcessInstance processInstance) {

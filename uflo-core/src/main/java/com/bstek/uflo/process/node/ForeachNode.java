@@ -35,7 +35,7 @@ import com.bstek.uflo.utils.IDGenerator;
  * @since 2013年8月8日
  */
 public class ForeachNode extends Node {
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -7072013520247348803L;
 	private String variable;
 	private ForeachType foreachType;
 	private String processVariable;

@@ -19,7 +19,8 @@ package com.bstek.uflo.process.node;
  * @author Jacky.gao
  * @since 2013年11月28日
  */
-public class UserData {
+public class UserData implements java.io.Serializable{
+	private static final long serialVersionUID = -2747945192424126140L;
 	private String key;
 	private String value;
 	

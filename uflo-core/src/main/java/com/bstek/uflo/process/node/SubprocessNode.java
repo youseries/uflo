@@ -36,7 +36,7 @@ import com.bstek.uflo.service.StartProcessInfo;
  * @since 2013年8月7日
  */
 public class SubprocessNode extends Node {
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -8435682801132645374L;
 	private static final Log log=LogFactory.getLog(SubprocessNode.class);
 	private boolean completeStartTask=true;
 	private SubprocessType subprocessType;

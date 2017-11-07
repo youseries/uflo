@@ -39,7 +39,7 @@ import com.bstek.uflo.utils.IDGenerator;
  * @since 2013年7月31日
  */
 public class StartNode extends Node {
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 3876654522900406746L;
 	private String taskName;
 	private String url;
 	private String formTemplate;

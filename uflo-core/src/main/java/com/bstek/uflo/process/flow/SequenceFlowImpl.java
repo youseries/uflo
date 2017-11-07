@@ -34,7 +34,7 @@ import com.bstek.uflo.service.ProcessService;
  * @since 2013年7月31日
  */
 public class SequenceFlowImpl implements SequenceFlow,java.io.Serializable{
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 4397019404545386929L;
 	private String name;
 	private String toNode;
 	private ConditionType conditionType;
