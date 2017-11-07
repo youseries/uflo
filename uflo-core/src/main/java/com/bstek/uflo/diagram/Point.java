@@ -19,7 +19,8 @@ package com.bstek.uflo.diagram;
  * @author Jacky.gao
  * @since 2013年9月8日
  */
-public class Point implements Cloneable{
+public class Point implements Cloneable,java.io.Serializable{
+	private static final long serialVersionUID = 3273274537869744551L;
 	private int x;
 	private int y;
 	
