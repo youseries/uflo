@@ -52,7 +52,7 @@ export default class UfloDesigner extends FlowDesigner{
     fromJson(json){
         this.name=json.name;
         this.key=json.key;
-        this.url=json.url;
+        this.url=json.startProcessUrl;
         this.eventHandlerBean=json.eventHandlerBean;
         this.categoryId=json.categoryId;
         this.effectDate=json.effectDate;
