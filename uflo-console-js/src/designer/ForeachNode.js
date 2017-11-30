@@ -14,9 +14,13 @@ export default class ForeachNode  extends BaseNode{
         const nodeName=this.getNodeName(json.type);
         const nodeProps=this.getXMLNodeBaseProps(json);
         let xml=`<${nodeName} ${nodeProps}`;
+        xml+=` var="${this.variable ? this.variable : ""}"`;
+        if(!this.foreachType){
+            this.foreachType="In";
+        }
         xml+=` foreach-type="${this.foreachType}"`;
         if(this.foreachType==='In'){
-            xml+=` process-variable="${this.processVariable}"`;
+            xml+=` in="${this.processVariable}"`;
         }else{
             xml+=` handler-bean="${this.handlerBean}"`;
         }
