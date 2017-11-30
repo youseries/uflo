@@ -40,7 +40,8 @@ public class ForeachNodeValidator extends NodeValidator {
 			errors.add("动态分支节点的集合类型变量来源属性不能为空");			
 		}else{
 			ForeachType foreachType=ForeachType.valueOf(type);
-			if(foreachType.equals(ForeachType.In) && StringUtils.isEmpty(element.getAttribute("in"))){
+			//if(foreachType.equals(ForeachType.In) && StringUtils.isEmpty(element.getAttribute("in"))){
+			if(foreachType.equals(ForeachType.In) && StringUtils.isEmpty(element.getAttribute("process-variable"))){
 				errors.add("动态分支节点的集合类型变量来源为流程变量时，流程变量属性不能为空");							
 			}
 			if(foreachType.equals(ForeachType.Handler) && StringUtils.isEmpty(element.getAttribute("handler-bean"))){
