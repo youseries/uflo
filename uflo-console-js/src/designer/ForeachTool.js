@@ -36,15 +36,18 @@ export default class ForeachTool extends BaseTool{
         <legend style="width: auto;margin-bottom: 1px;border-bottom:none;font-size: inherit;color: #4b4b4b;">集合类型变量来源配置</legend></fieldset>`);
         group.append(sourceGroup);
 
+        if(!target.foreachType){
+            target.foreachType="In";
+        }
         const varGroup=$(`<div class="form-group uflo-group"></div>`);
         sourceGroup.append(varGroup);
-        const varRadio=$(`<label><input type="radio" ${(target.foreachType==='ProcessVariable' || !target.foreachType) ? 'checked' : ''} name="var_source_type_radio">流程变量</label>`);
+        const varRadio=$(`<label><input type="radio" ${target.foreachType==='In' ? 'checked' : ''} name="var_source_type_radio">流程变量</label>`);
         varGroup.append(varRadio);
         const varEditor=$(`<input type="text" value="${target.processVariable || ''}" class="form-control uflo-text-editor" style="width: 280px;margin-left: 4px">`);
         varGroup.append(varEditor);
         varEditor.change(function(){
             target.processVariable=$(this).val();
-        })
+        });
 
         const beanGroup=$(`<div class="form-group uflo-group"></div>`);
         sourceGroup.append(beanGroup);
@@ -68,7 +71,7 @@ export default class ForeachTool extends BaseTool{
         varEditor.prop('readOnly',true);
         beanEditor.prop('readOnly',true);
         selectButton.attr('disabled',true);
-        if(!target.foreachType || target.foreachType==='In'){
+        if(target.foreachType==='In'){
             varEditor.prop('readOnly',false);
         }else{
             beanEditor.prop('readOnly',false);

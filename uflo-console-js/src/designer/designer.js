@@ -55,8 +55,12 @@ function loadFile(designer){
         success:(process)=>{
             designer.fromJson(process);
         },
-        error:()=>{
-            MsgBox.alert(`加载流程模版文件${name}失败！`);
+        error:(response)=>{
+            if(response && response.responseText){
+                bootbox.alert("<span style='color: red'>加载流程模版文件失败："+response.responseText+"</span>");
+            }else{
+                bootbox.alert("<span style='color: red'>加载流程模版文件失败！</span>");
+            }
         }
     });
 };
@@ -94,8 +98,12 @@ function buildButtons(designer){
                     success:()=>{
                         MsgBox.alert('保存成功！');
                     },
-                    error:()=>{
-                        MsgBox.alert('保存失败！');
+                    error:(response)=>{
+                        if(response && response.responseText){
+                            bootbox.alert("<span style='color: red'>保存失败："+response.responseText+"</span>");
+                        }else{
+                            bootbox.alert("<span style='color: red'>保存失败！</span>");
+                        }
                     }
                 });
             }
@@ -132,8 +140,12 @@ function buildButtons(designer){
                     success:function(){
                         MsgBox.alert('部署成功！');
                     },
-                    error:function(){
-                        MsgBox.alert('部署失败！');
+                    error:function(response){
+                        if(response && response.responseText){
+                            bootbox.alert("<span style='color: red'>部署失败："+response.responseText+"</span>");
+                        }else{
+                            bootbox.alert("<span style='color: red'>部署失败！</span>");
+                        }
                     }
                 });
             });

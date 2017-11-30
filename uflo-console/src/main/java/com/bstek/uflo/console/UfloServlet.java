@@ -27,6 +27,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
@@ -56,23 +57,44 @@ public class UfloServlet extends HttpServlet{
 	
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String path=req.getContextPath()+URL;
-		String uri=req.getRequestURI();
-		String targetUrl=uri.substring(path.length());
-		if(targetUrl.length()<1){
-			resp.sendRedirect(req.getContextPath()+"/uflo/todo");
-			return;
+		try{
+			String path=req.getContextPath()+URL;
+			String uri=req.getRequestURI();
+			String targetUrl=uri.substring(path.length());
+			if(targetUrl.length()<1){
+				resp.sendRedirect(req.getContextPath()+"/uflo/todo");
+				return;
+			}
+			int slashPos=targetUrl.indexOf("/",1);
+			if(slashPos>-1){
+				targetUrl=targetUrl.substring(0,slashPos);
+			}
+			ServletHandler targetHandler=handlerMap.get(targetUrl);
+			if(targetHandler==null){
+				outContent(resp,"Handler ["+targetUrl+"] not exist.");
+				return;
+			}
+			targetHandler.execute(req, resp);
+		}catch(Exception ex){
+			Throwable e=getCause(ex);
+			resp.setCharacterEncoding("UTF-8");
+			PrintWriter pw=resp.getWriter();
+			resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+			String errorMsg = e.getMessage();
+			if(StringUtils.isBlank(errorMsg)){
+				errorMsg=e.getClass().getName();
+			}
+			pw.write(errorMsg);
+			pw.close();
+			throw new ServletException(ex);				
 		}
-		int slashPos=targetUrl.indexOf("/",1);
-		if(slashPos>-1){
-			targetUrl=targetUrl.substring(0,slashPos);
+	}
+	
+	private Throwable getCause(Throwable e){
+		if(e.getCause()!=null){
+			return getCause(e.getCause());
 		}
-		ServletHandler targetHandler=handlerMap.get(targetUrl);
-		if(targetHandler==null){
-			outContent(resp,"Handler ["+targetUrl+"] not exist.");
-			return;
-		}
-		targetHandler.execute(req, resp);
+		return e;
 	}
 
 	private void outContent(HttpServletResponse resp,String msg) throws IOException {
