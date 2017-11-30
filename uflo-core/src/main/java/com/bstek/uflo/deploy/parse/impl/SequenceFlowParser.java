@@ -101,10 +101,14 @@ public class SequenceFlowParser implements Parser {
 			if(StringUtils.isEmpty(d[0])){
 				continue;
 			}
-			Point point=new Point();
-			point.setX(Integer.valueOf(d[0]));
-			point.setY(Integer.valueOf(d[1]));
-			points.add(point);
+			if(d.length>1){
+				for(int i=0;i<d.length;i+=2){
+					Point point=new Point();
+					point.setX(Integer.valueOf(d[i]));
+					point.setY(Integer.valueOf(d[i+1]));
+					points.add(point);	
+				}
+			}
 		}
 		return points;
 	}
