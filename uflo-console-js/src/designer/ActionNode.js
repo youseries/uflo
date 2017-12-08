@@ -29,7 +29,7 @@ export default class ActionNode  extends BaseNode{
         if(info){
             return info;
         }
-        if(this.handlerBean){
+        if(!this.handlerBean){
             info=`${this.name}节点动作Bean不能为空!`;
             return info;
         }
