@@ -25,7 +25,7 @@ export default class ActionTool  extends BaseTool{
     buildActionBean(target){
         const group=$(`<div class="form-group uflo-group"><label>动作Bean：</label></div>`);
         const tip="一个实现了com.bstek.uflo.process.handler.ActionHandler接口并配置到Spring中的Bean ID"
-        const beanEditor=$(`<input type="text" value="${target.handlerBean || ''}" placeholder="${tip}" title="${tip}" class="form-control uflo-text-editor" style="width: 265px;">`);
+        const beanEditor=$(`<input type="text" value="${target.handlerBean || ''}" placeholder="${tip}" title="${tip}" class="form-control uflo-text-editor" style="width: 260px;">`);
         group.append(beanEditor);
         beanEditor.change(function(){
             target.handlerBean=$(this).val();
