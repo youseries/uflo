@@ -46,6 +46,16 @@ class TodoPage extends Component{
                 dispatch(actions.claimTask(window.cliamList.pageIndex,window.cliamList.pageSize,data.id));
             });
         });
+        event.eventEmitter.on(event.RELOAD_TODO,function(){
+            dispatch(actions.loadTodoList(window.todoList.pageIndex,window.todoList.pageSize));
+        });
+        event.eventEmitter.on(event.RELOAD_CLIAM,function(){
+            dispatch(actions.loadCliamList(window.cliamList.pageIndex,window.cliamList.pageSize));
+        });
+        event.eventEmitter.on(event.RELOAD_HISTORY,function(){
+            dispatch(actions.loadHistory(window.historyList.pageIndex,window.historyList.pageSize));
+        });
+        window.todoEvent=event;
     }
     render(){
         const {todoList,cliamList,historyList,dispatch}=this.props;
