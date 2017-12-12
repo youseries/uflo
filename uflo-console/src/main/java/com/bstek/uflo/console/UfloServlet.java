@@ -44,7 +44,7 @@ public class UfloServlet extends HttpServlet{
 	@Override
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config);
-		WebApplicationContext applicationContext=WebApplicationContextUtils.getWebApplicationContext(config.getServletContext());
+		WebApplicationContext applicationContext=getWebApplicationContext(config);
 		Collection<ServletHandler> handlers=applicationContext.getBeansOfType(ServletHandler.class).values();
 		for(ServletHandler handler:handlers){
 			String url=handler.url();
@@ -54,6 +54,11 @@ public class UfloServlet extends HttpServlet{
 			handlerMap.put(url, handler);
 		}
 	}
+	
+	protected WebApplicationContext getWebApplicationContext(ServletConfig config){
+		return WebApplicationContextUtils.getWebApplicationContext(config.getServletContext());
+	}
+	
 	
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
