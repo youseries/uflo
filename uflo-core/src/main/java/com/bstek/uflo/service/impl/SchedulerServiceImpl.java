@@ -15,6 +15,7 @@
  ******************************************************************************/
 package com.bstek.uflo.service.impl;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -26,6 +27,7 @@ import org.quartz.JobKey;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.quartz.Trigger;
+import org.quartz.TriggerKey;
 import org.quartz.impl.StdSchedulerFactory;
 import org.quartz.impl.calendar.BaseCalendar;
 import org.quartz.impl.triggers.AbstractTrigger;
@@ -53,6 +55,8 @@ import com.bstek.uflo.service.SchedulerService;
 import com.bstek.uflo.service.TaskService;
 import com.bstek.uflo.service.impl.job.ReminderJob;
 import com.bstek.uflo.service.impl.job.ReminderJobDetail;
+import com.bstek.uflo.service.impl.job.ScanReminderJob;
+import com.bstek.uflo.service.impl.job.ScanReminderJobDetail;
 
 /**
  * @author Jacky.gao
@@ -63,6 +67,7 @@ public class SchedulerServiceImpl implements SchedulerService,ApplicationContext
 	private static final String JOB_NAME_PREFIX="reminderJob";
 	private static final String JOB_GROUP_PREFIX="remindergroup";
 	private static final String REMINDER_CALENDAR_PREFIX="reminderCalendar";
+	private static final String SCAN_REMINDER_CRON="0/40 * * * * ?";
 	private Scheduler scheduler;
 	private TaskService taskService;
 	private ProcessService processService;
@@ -70,6 +75,7 @@ public class SchedulerServiceImpl implements SchedulerService,ApplicationContext
 	private ApplicationContext applicationContext;
 	private TaskDueDefinitionProvider provider;
 	private String makeSchedulerThreadDaemon;
+	private List<Long> reminderTaskList=new ArrayList<Long>();
 	public Scheduler getScheduler() {
 		return scheduler;
 	}
@@ -130,12 +136,14 @@ public class SchedulerServiceImpl implements SchedulerService,ApplicationContext
 				log.warning(e.getMessage());
 			}
 			taskService.deleteTaskReminder(reminder.getId());
+			reminderTaskList.remove(reminder.getTaskId());
 		}
 	}
 
 	@Override
 	public void resetScheduer() {
 		try{
+			reminderTaskList.clear();
 			if(scheduler!=null && !scheduler.isShutdown()){
 				scheduler.shutdown(false);
 			}
@@ -167,7 +175,28 @@ public class SchedulerServiceImpl implements SchedulerService,ApplicationContext
 	private void initTaskReminders(){
 		List<TaskReminder> reminders=taskService.getAllTaskReminders();
 		for(TaskReminder reminder:reminders){
+			reminderTaskList.add(reminder.getTaskId());
 			addReminderJob(reminder,null,null);
+		}
+		initScanReminderJob();
+	}
+	
+	private void initScanReminderJob(){
+		CronTriggerImpl trigger=new CronTriggerImpl();
+		trigger.setName("UfloScanReminderTrigger");
+		trigger.setKey(new TriggerKey("UfloScanReminderTrigger"));
+		try {
+			trigger.setCronExpression(SCAN_REMINDER_CRON);
+			ScanReminderJob job=new ScanReminderJob();
+			ScanReminderJobDetail detail=new ScanReminderJobDetail();
+			detail.setSchedulerService(this);
+			detail.setTaskService(taskService);
+			detail.setReminderTaskList(reminderTaskList);
+			detail.setJobClass(job.getClass());
+			detail.setKey(new JobKey("UfloScanReminderJob"));
+			scheduler.scheduleJob(detail, trigger);
+		} catch (Exception e1) {
+			throw new RuntimeException(e1);
 		}
 	}
 	
