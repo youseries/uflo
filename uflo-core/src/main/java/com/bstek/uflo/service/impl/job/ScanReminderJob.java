@@ -38,14 +38,11 @@ public class ScanReminderJob implements Job {
 		List<Long> reminderTaskList=detail.getReminderTaskList();
 		List<TaskReminder> reminders=taskService.getAllTaskReminders();
 		SchedulerService schedulerService=detail.getSchedulerService();
-		System.out.println("scan reminder.....");
 		for(TaskReminder reminder:reminders){
 			long taskId=reminder.getTaskId();
-			System.out.println("find reminder "+taskId+".....");
 			if(reminderTaskList.contains(taskId)){
 				continue;
 			}
-			System.out.println("add reminder "+taskId+".....");
 			schedulerService.addReminderJob(reminder,null,null);
 			reminderTaskList.add(taskId);
 		}
