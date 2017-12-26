@@ -164,7 +164,7 @@ export default class UfloDesigner extends FlowDesigner{
         categoryText.val(target.categoryId);
         categoryText.change(function(){
             target.categoryId=$(this).val();
-        })
+        });
 
         const effectDateGroup=$(`<div class="form-group"><label>生效日期：</label></div>`);
         g.append(effectDateGroup);
