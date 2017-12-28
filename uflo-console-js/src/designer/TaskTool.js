@@ -439,6 +439,8 @@ export default class TaskTool extends BaseTool{
             dialog.show(data,function(result){
                 nameTd.html(result.key);
                 valueTd.html(result.value);
+                data.key=result.key;
+                data.value=result.value;
             });
         });
     }
