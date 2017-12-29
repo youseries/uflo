@@ -42,10 +42,11 @@ $(document).ready(function(){
 });
 
 function loadFile(designer){
-    const name=getParameter('p');
+    let name=getParameter('p');
     if(!name){
         return;
     }
+    name=decodeURI(decodeURI(name));
     designer.setInfo(name);
     designer.processFile=name;
     const url=window._server+"/designer/openFile";

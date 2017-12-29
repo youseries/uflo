@@ -3,6 +3,8 @@ package com.bstek.uflo.console.handler.impl.designer;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -54,6 +56,7 @@ public class DesignerServletHandler extends RenderPageServletHandler {
 	
 	public void openFile(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String name=req.getParameter("name");
+		name=decode(name);
 		ProcessProvider targetProvider=ProcessProviderUtils.getProcessProvider(name);
 		if(targetProvider==null){
 			throw new RuntimeException("Unsupport file : "+name);
@@ -72,6 +75,7 @@ public class DesignerServletHandler extends RenderPageServletHandler {
 	
 	public void deleteFile(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String fileName=req.getParameter("fileName");
+		fileName=decode(fileName);
 		ProcessProvider provider=ProcessProviderUtils.getProcessProvider(fileName);
 		provider.deleteProcess(fileName);
 	}
@@ -99,6 +103,17 @@ public class DesignerServletHandler extends RenderPageServletHandler {
 	
 	public void setProcessService(ProcessService processService) {
 		this.processService = processService;
+	}
+	
+	private String decode(String str){
+		if(str==null)return str;
+		try {
+			str=URLDecoder.decode(str,"utf-8");
+			str=URLDecoder.decode(str,"utf-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		return str;
 	}
 
 	@Override
