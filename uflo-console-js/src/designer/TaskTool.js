@@ -648,7 +648,7 @@ export default class TaskTool extends BaseTool{
             beanEditor.prop('readOnly',false);
             holidayGroup.show();
             const period=_this.buildPeriodReminder(target);
-            period.unit='day';
+            period.unit='Day';
             period.repeat=1;
             dayRadio.children('input').attr('checked',true);
             periodEditor.val("1");
