@@ -565,13 +565,13 @@ export default class TaskTool extends BaseTool{
         periodGroup.append(dayRadio);
         dayRadio.children('input').click(function(){
             const period=_this.buildPeriodReminder(target);
-            period.unit='day';
+            period.unit='Day';
         });
         const hourRadio=$(`<span style="margin-left: 5px;"><input type="radio" name="period_reminder_unit">小时</span>`);
         periodGroup.append(hourRadio);
         hourRadio.children('input').click(function(){
             const period=_this.buildPeriodReminder(target);
-            period.unit='hour';
+            period.unit='Hour';
         });
         const minuteRadio=$(`<span style="margin-left: 5px;"><input type="radio" name="period_reminder_unit">分钟</span>`);
         periodGroup.append(minuteRadio);
@@ -579,16 +579,16 @@ export default class TaskTool extends BaseTool{
 
         minuteRadio.children('input').click(function(){
             const period=_this.buildPeriodReminder(target);
-            period.unit='minute';
+            period.unit='Minute';
         });
 
-        if(reminder.unit==='day'){
+        if(reminder.unit==='Day'){
             dayRadio.children('input').attr('checked',true);
         }
-        if(reminder.unit==='hour'){
+        if(reminder.unit==='Hour'){
             hourRadio.children('input').attr('checked',true);
         }
-        if(reminder.unit==='minute'){
+        if(reminder.unit==='Minute'){
             minuteRadio.children('input').attr('checked',true);
         }
 
