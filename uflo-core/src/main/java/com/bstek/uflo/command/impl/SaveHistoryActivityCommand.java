@@ -69,7 +69,7 @@ public class SaveHistoryActivityCommand implements Command<HistoryActivity> {
 				
 			}
 			if(hisActivity==null){
-				throw new RuntimeException(""+node.getName()+" history activity node does not exist");				
+				return null;			
 			}
 			hisActivity.setEndDate(new Date());
 			if(StringUtils.isNotEmpty(leaveFlowName)){
