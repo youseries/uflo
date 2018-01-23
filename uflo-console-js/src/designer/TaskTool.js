@@ -729,7 +729,7 @@ export default class TaskTool extends BaseTool{
                 if(!target.dueDefinition.dueAction){
                     target.dueDefinition.dueAction={};
                 }
-                target.dueDefinition.dueAction.handlerBean=$(this).val();
+                target.dueDefinition.dueAction.handlerBean=beanId;
                 beanEditor.val(beanId);
             });
         });
