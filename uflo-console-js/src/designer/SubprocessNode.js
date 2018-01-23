@@ -15,18 +15,18 @@ export default class SubprocessNode  extends BaseNode{
         const nodeProps=this.getXMLNodeBaseProps(json);
         let xml=`<${nodeName} ${nodeProps}`;
         if(this.subprocessKey){
-            xml+=`subprocess-key="${this.subprocessKey}"`;
+            xml+=` subprocess-key="${this.subprocessKey}"`;
         }
         if(this.subprocessId){
-            xml+=`subprocess-id="${this.subprocessId}"`;
+            xml+=` subprocess-id="${this.subprocessId}"`;
         }
         if(this.subprocessName){
-            xml+=`subprocess-name="${this.subprocessName}"`;
+            xml+=` subprocess-name="${this.subprocessName}"`;
         }
         if(this.completeStartTask){
-            xml+=`complete-start-task="${this.completeStartTask}"`;
+            xml+=` complete-start-task="${this.completeStartTask}"`;
         }else{
-            xml+=`complete-start-task="false"`;
+            xml+=` complete-start-task="false"`;
         }
         xml+=`>`;
         if(this.description){
