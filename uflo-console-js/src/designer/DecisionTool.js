@@ -32,11 +32,12 @@ export default class DecisionTool  extends BaseTool{
         group.append(exprGroup);
         const exprRadio=$(`<label><input type="radio" name="decision_type_radio">条件表达式</label>`);
         exprGroup.append(exprRadio);
-        const exprEditor=$(`<input type="text" value="${target.expression || ''}" class="form-control uflo-text-editor" style="width: 290px;margin-left: 4px">`);
+        const exprEditor=$(`<input type="text" class="form-control uflo-text-editor" style="width: 290px;margin-left: 4px">`);
         exprGroup.append(exprEditor);
         exprEditor.change(function(){
             target.expression=$(this).val();
         });
+        exprEditor.val(target.expression || '');
 
         const beanGroup=$(`<div class="form-group uflo-group"></div>`);
         group.append(beanGroup);
