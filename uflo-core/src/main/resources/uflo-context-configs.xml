@@ -69,6 +69,7 @@
 		<property name="processService" ref="uflo.processService"></property>
 		<property name="threadCount" value="${uflo.jobThreadCount}"></property>
 		<property name="makeSchedulerThreadDaemon" value="${uflo.makeSchedulerThreadDaemon}"></property>
+		<property name="enableScanReminderJob" value="${uflo.enableScanReminderJob}"></property>
 	</bean>
 	
 	<bean id="uflo.instanceDetection" class="com.bstek.uflo.heartbeat.InstanceDetection" depends-on="uflo.environmentUtils">
