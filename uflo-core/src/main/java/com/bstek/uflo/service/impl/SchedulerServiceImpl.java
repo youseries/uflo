@@ -75,13 +75,18 @@ public class SchedulerServiceImpl implements SchedulerService,ApplicationContext
 	private ApplicationContext applicationContext;
 	private TaskDueDefinitionProvider provider;
 	private String makeSchedulerThreadDaemon;
+	private boolean enableScanReminderJob;
 	private List<Long> reminderTaskList=new ArrayList<Long>();
 	public Scheduler getScheduler() {
 		return scheduler;
 	}
 	
 	public void addReminderJob(TaskReminder reminder,ProcessInstance processInstance,Task task) {
+		JobKey jobKey=new JobKey(JOB_NAME_PREFIX+reminder.getId(),JOB_GROUP_PREFIX);
 		try {
+			if(scheduler.checkExists(jobKey)){
+				return;
+			}
 			AbstractTrigger<? extends Trigger> trigger=null;
 			if(reminder.getType().equals(ReminderType.Once)){
 				SimpleTriggerImpl simpleTrigger=new SimpleTriggerImpl();
@@ -108,7 +113,7 @@ public class SchedulerServiceImpl implements SchedulerService,ApplicationContext
 			}
 			jobDetail.setTask(task);
 			jobDetail.setProcessInstance(processService.getProcessInstanceById(task.getProcessInstanceId()));
-			jobDetail.setKey(new JobKey(JOB_NAME_PREFIX+reminder.getId(),JOB_GROUP_PREFIX));
+			jobDetail.setKey(jobKey);
 			Calendar calendar=getCalendar(reminder,processInstance,task);
 			if(calendar!=null){
 				String calendarName=REMINDER_CALENDAR_PREFIX+reminder.getId();
@@ -178,7 +183,9 @@ public class SchedulerServiceImpl implements SchedulerService,ApplicationContext
 			reminderTaskList.add(reminder.getTaskId());
 			addReminderJob(reminder,null,null);
 		}
-		initScanReminderJob();
+		if(enableScanReminderJob){
+			initScanReminderJob();			
+		}
 	}
 	
 	private void initScanReminderJob(){
@@ -253,6 +260,10 @@ public class SchedulerServiceImpl implements SchedulerService,ApplicationContext
 		
 	public void setMakeSchedulerThreadDaemon(String makeSchedulerThreadDaemon) {
 		this.makeSchedulerThreadDaemon = makeSchedulerThreadDaemon;
+	}
+	
+	public void setEnableScanReminderJob(boolean enableScanReminderJob) {
+		this.enableScanReminderJob = enableScanReminderJob;
 	}
 	
 	public void setApplicationContext(ApplicationContext applicationContext) {
