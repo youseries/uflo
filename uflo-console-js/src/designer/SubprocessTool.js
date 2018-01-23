@@ -132,7 +132,7 @@ export default class SubprocessTool  extends BaseTool{
             target.inVariables=inVariables;
         }
         const _this=this;
-        const dialog=new SubprocessVariableDialog();
+        const dialog=new SubprocessVariableDialog('in');
         addButton.click(()=>{
             dialog.show({},function(variable){
                 inVariables.push(variable);
@@ -163,9 +163,9 @@ export default class SubprocessTool  extends BaseTool{
             target.outVariables=outVariables;
         }
         const _this=this;
-        const dialog=new SubprocessVariableDialog();
+        const dialog=new SubprocessVariableDialog('out');
         addButton.click(()=>{
-            dialog.show({},function(variable){
+            dialog.show({type:'out'},function(variable){
                 outVariables.push(variable);
                 _this.buildTableBody(body,variable,outVariables,dialog);
             });

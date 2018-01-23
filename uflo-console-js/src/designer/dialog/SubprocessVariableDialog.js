@@ -4,7 +4,8 @@
 import {MsgBox} from 'flowdesigner';
 
 export default class SubprocessVariableDialog{
-    constructor(){
+    constructor(type){
+        this.type=type;
         this.dialog=$(`<div class="modal fade" role="dialog" aria-hidden="true" style="z-index: 10000">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -13,7 +14,7 @@ export default class SubprocessVariableDialog{
                             &times;
                         </button>
                         <h4 class="modal-title">
-                            从子流程中传出的流程变量配置
+                            流程变量配置
                         </h4>
                     </div>
                     <div class="modal-body"></div>
@@ -26,12 +27,18 @@ export default class SubprocessVariableDialog{
         this.initBody(body,footer);
     }
     initBody(body,footer){
-        const nameGroup=$(`<div class="form-group uflo-group"><label>子流程变量名：</label></div>`);
+        let label="子流程变量名";
+        let label1="传回父流程变量名";
+        if(this.type==='in'){
+            label="父流程变量名";
+            label1="传入子流程变量名";
+        }
+        const nameGroup=$(`<div class="form-group uflo-group"><label>${label}：</label></div>`);
         body.append(nameGroup);
         this.nameEditor=$(`<input type="text" class="form-control uflo-text-editor" style="width: 460px;">`);
         nameGroup.append(this.nameEditor);
 
-        const valueGroup=$(`<div class="form-group uflo-group"><label>传回父流程变量名：</label></div>`);
+        const valueGroup=$(`<div class="form-group uflo-group"><label>${label1}：</label></div>`);
         body.append(valueGroup);
         this.valueEditor=$(`<input type="text" class="form-control uflo-text-editor" style="width: 433px;">`);
         valueGroup.append(this.valueEditor);
@@ -40,11 +47,11 @@ export default class SubprocessVariableDialog{
         footer.append(saveButton);
         saveButton.click(()=>{
             if(!this.nameEditor.val() || this.nameEditor.val()===''){
-                MsgBox.alert('请输入子流程变量名');
+                MsgBox.alert(`请输入${label}`);
                 return;
             }
             if(!this.valueEditor.val() || this.valueEditor.val()===''){
-                MsgBox.alert('请输入传回父流程变量名');
+                MsgBox.alert(`请输入${label1}`);
                 return;
             }
             this.callback.call(this,{inParameterKey:this.nameEditor.val(),outParameterKey:this.valueEditor.val()});
