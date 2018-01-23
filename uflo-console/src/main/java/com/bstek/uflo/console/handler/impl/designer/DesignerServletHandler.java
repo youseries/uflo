@@ -67,6 +67,7 @@ public class DesignerServletHandler extends RenderPageServletHandler {
 			ProcessDefinition process=ProcessParser.parseProcess(bytes, 0, true);
 			writeObjectToJson(resp, process);
 		}catch(Exception ex){
+			ex.printStackTrace();
 			throw new RuntimeException(ex);
 		}finally{
 			IOUtils.closeQuietly(inputStream);
