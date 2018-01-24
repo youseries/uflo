@@ -454,7 +454,7 @@ public class TaskNode extends Node {
 		int minute=dueAction.getMinute();
 		BusinessCalendar businessCalendar=(BusinessCalendar)context.getApplicationContext().getBean(BusinessCalendar.BEAN_ID);
 		int businessDayHours=businessCalendar.getBusinessDayHours();
-		if(dueDef.getBusinessDayHours()>0){
+		if(dueDef!=null && dueDef.getBusinessDayHours()>0){
 			businessDayHours=dueDef.getBusinessDayHours();
 		}
 		if(day>0){
