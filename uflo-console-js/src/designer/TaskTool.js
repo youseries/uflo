@@ -489,9 +489,6 @@ export default class TaskTool extends BaseTool{
 
     buildDueReminder(target){
         const dueDefinition=target.dueDefinition || {reminder:{},dueAction:{}};
-        if(!target.dueDefinition){
-            target.dueDefinition=dueDefinition;
-        }
         const group=$(`<fieldset style="padding: 10px;border:solid 1px #dddddd;border-radius: 8px;margin-bottom: 10px;margin-top: 10px">
         <legend style="width: auto;margin-bottom: 1px;border-bottom:none;font-size: inherit;color: #4b4b4b;">任务过期提醒配置</legend></fieldset>`);
         const beanGroup=$(`<div class="form-group uflo-group"><label>提醒Bean：</label></div>`);
@@ -506,8 +503,8 @@ export default class TaskTool extends BaseTool{
             if(!target.dueDefinition){
                 target.dueDefinition=dueDefinition;
             }
-            if(!dueDefinition.reminder){
-                dueDefinition.reminder={};
+            if(!target.dueDefinition.reminder){
+                target.dueDefinition.reminder={};
             }
             dueDefinition.reminder.handlerBean=$(this).val();
         });
@@ -520,10 +517,10 @@ export default class TaskTool extends BaseTool{
                 if(!target.dueDefinition){
                     target.dueDefinition=dueDefinition;
                 }
-                if(!dueDefinition.reminder){
-                    dueDefinition.reminder={};
+                if(!target.dueDefinition.reminder){
+                    target.dueDefinition.reminder={};
                 }
-                dueDefinition.reminder.handlerBean=beanId;
+                target.dueDefinition.reminder.handlerBean=beanId;
             })
         });
 
