@@ -69,7 +69,8 @@ export default class CountersignTaskTool extends TaskTool{
         g.append(exprGroup);
         const exprRadio=$(`<span style="font-size: 12px"><input type="radio" ${completeRule==='expr' ? 'checked' : ''} name="countersign_complete_rule_radio">表达式</span>`);
         exprGroup.append(exprRadio);
-        const exprEditor=$(`<input type="text" value="${target.countersignExpression || ''}" class="form-control uflo-text-editor" style="width: 275px;margin-left: 10px">`);
+        const exprEditor=$(`<input type="text" class="form-control uflo-text-editor" style="width: 275px;margin-left: 10px">`);
+        exprEditor.val(target.countersignExpression || '');
         exprGroup.append(exprEditor);
         exprEditor.change(function(){
             target.countersignExpression=$(this).val();
