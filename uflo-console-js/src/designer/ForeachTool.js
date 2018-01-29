@@ -26,7 +26,8 @@ export default class ForeachTool extends BaseTool{
         const group=$(`<div class="form-group uflo-group"></div>`);
         const varnameGroup=$(`<div class="form-group uflo-group"><label>写入分支的变量名：</label></div>`);
         group.append(varnameGroup);
-        const varnameEditor=$(`<input type="text" value="${target.variable || ''}" class="form-control uflo-text-editor" style="width: 250px;">`);
+        const varnameEditor=$(`<input type="text" class="form-control uflo-text-editor" style="width: 250px;">`);
+        varnameEditor.val(target.variable || '');
         varnameGroup.append(varnameEditor);
         varnameEditor.change(function(){
             target.variable=$(this).val();
@@ -43,7 +44,8 @@ export default class ForeachTool extends BaseTool{
         sourceGroup.append(varGroup);
         const varRadio=$(`<label><input type="radio" ${target.foreachType==='In' ? 'checked' : ''} name="var_source_type_radio">流程变量</label>`);
         varGroup.append(varRadio);
-        const varEditor=$(`<input type="text" value="${target.processVariable || ''}" class="form-control uflo-text-editor" style="width: 280px;margin-left: 4px">`);
+        const varEditor=$(`<input type="text" class="form-control uflo-text-editor" style="width: 280px;margin-left: 4px">`);
+        varEditor.val(target.processVariable || '');
         varGroup.append(varEditor);
         varEditor.change(function(){
             target.processVariable=$(this).val();
@@ -54,7 +56,8 @@ export default class ForeachTool extends BaseTool{
         const beanRadio=$(`<label><input type="radio" ${target.foreachType==='Handler' ? 'checked' : ''} name="var_source_type_radio">实现类Bean</label>`);
         beanGroup.append(beanRadio);
         const tip="一个实现了com.bstek.uflo.process.handler.ForeachHandler接口配置在Spring中的Bean ID";
-        const beanEditor=$(`<input type="text" value="${target.handlerBean || ''}" placeholder="${tip}" title="${tip}" class="form-control uflo-text-editor" style="width: 205px;margin-left: 4px">`);
+        const beanEditor=$(`<input type="text" placeholder="${tip}" title="${tip}" class="form-control uflo-text-editor" style="width: 205px;margin-left: 4px">`);
+        beanEditor.val(target.handlerBean || '');
         beanGroup.append(beanEditor);
         beanEditor.change(function(){
             target.handlerBean=$(this).val();
