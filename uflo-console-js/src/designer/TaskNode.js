@@ -81,8 +81,8 @@ export default class TaskNode extends BaseNode{
             }
             const dueAction=this.dueDefinition.dueAction;
             if(dueAction && dueAction.handlerBean){
-                xml+=`<due-action handler-bean="${dueAction.handlerBean}" hour="${dueAction.hour===undefined ? 0 : dueAction.hour}" day="${dueAction.day===undefined ? 0 : dueAction.day}"
-                 minute="${dueAction.minute===undefined ? 0 : dueAction.minute}">`;
+                xml+=`<due-action handler-bean="${dueAction.handlerBean || ''}" hour="${dueAction.hour || 0}" day="${dueAction.day || 0}"
+                 minute="${dueAction.minute || 0}">`;
                 for(let calendar of dueAction.calendarInfos || []){
                     xml+=`<calendar-provider name="${calendar.name}" id="${calendar.id}"/>`;
                 }
