@@ -160,7 +160,7 @@ public class CentralServletHandler extends RenderPageServletHandler{
 		String user=req.getParameter("user");
 		taskService.claim(taskId, user);
 	}
-	public void loadClaimUsers(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	public void loadCliamUsers(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		long taskId=Long.valueOf(req.getParameter("taskId"));
 		List<TaskParticipator> list=taskService.getTaskParticipators(taskId);
 		writeObjectToJson(resp, list);
