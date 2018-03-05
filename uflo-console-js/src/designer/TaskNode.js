@@ -79,9 +79,10 @@ export default class TaskNode extends BaseNode{
                     xml+=`<once-reminder handler-bean="${reminder.handlerBean}"/>`;
                 }
             }
-            if(this.dueDefinition.dueAction){
-                const dueAction=this.dueDefinition.dueAction;
-                xml+=`<due-action handler-bean="${dueAction.handlerBean}" hour="${dueAction.hour}" day="${dueAction.day}" minute="${dueAction.minute}">`;
+            const dueAction=this.dueDefinition.dueAction;
+            if(dueAction && dueAction.handlerBean){
+                xml+=`<due-action handler-bean="${dueAction.handlerBean || ''}" hour="${dueAction.hour || 0}" day="${dueAction.day || 0}"
+                 minute="${dueAction.minute || 0}">`;
                 for(let calendar of dueAction.calendarInfos || []){
                     xml+=`<calendar-provider name="${calendar.name}" id="${calendar.id}"/>`;
                 }
