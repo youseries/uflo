@@ -36,4 +36,5 @@ public interface SchedulerService {
 	void removeReminderJob(Task task);
 	Calendar buildCalendar(List<CalendarInfo> infos);
 	void resetScheduer();
+	void deleteJob(long reminderId);
 }
