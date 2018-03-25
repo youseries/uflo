@@ -80,10 +80,11 @@ function buildButtons(designer){
         icon:'<i class="uflo uflo-save"></i>',
         tip:'保存流程模版文件',
         click:function(){
-            const content=designer.toXML();
+            let content=designer.toXML();
             if(!content){
                 return;
             }
+            content=encodeURI(content);
             if(!designer.processFile){
                 saveDialog.show(designer,function(fileName){
                     designer.processFile=fileName;
@@ -114,10 +115,11 @@ function buildButtons(designer){
         icon:'<i class="uflo uflo-saveas"></i>',
         tip:'另存流程模版文件',
         click:function(){
-            const content=designer.toXML();
+            let content=designer.toXML();
             if(!content){
                 return;
             }
+            content=encodeURI(content);
             saveDialog.show(designer,function(fileName){
                 designer.processFile=fileName;
                 designer.setInfo(fileName);
@@ -128,10 +130,11 @@ function buildButtons(designer){
         icon:'<i class="uflo uflo-deploy"></i>',
         tip:'部署流程模版',
         click:function(){
-            const content=designer.toXML();
+            let content=designer.toXML();
             if(!content){
                 return;
             }
+            content=encodeURI(content);
             MsgBox.confirm('确实要部署当前流程模版到当前应用中吗？',function(){
                 const url=window._server+'/designer/deploy';
                 $.ajax({

@@ -49,6 +49,7 @@ public class DesignerServletHandler extends RenderPageServletHandler {
 	
 	public void deploy(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String content=req.getParameter("content");
+		content=decode(content);
 		InputStream inputStream=IOUtils.toInputStream(content, "utf-8");
 		processService.deployProcess(inputStream);
 		IOUtils.closeQuietly(inputStream);
@@ -83,6 +84,7 @@ public class DesignerServletHandler extends RenderPageServletHandler {
 	public void saveFile(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String fileName=req.getParameter("fileName");
 		String content=req.getParameter("content");
+		content=decode(content);
 		ProcessProvider provider=ProcessProviderUtils.getProcessProvider(fileName);
 		provider.saveProcess(fileName, content);
 	}
