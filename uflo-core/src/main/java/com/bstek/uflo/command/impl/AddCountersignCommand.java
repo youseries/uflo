@@ -15,15 +15,22 @@
  ******************************************************************************/
 package com.bstek.uflo.command.impl;
 
+import java.util.Collection;
 import java.util.Date;
 
+import org.apache.commons.lang.StringUtils;
 import org.hibernate.Session;
 
 import com.bstek.uflo.command.Command;
 import com.bstek.uflo.env.Context;
+import com.bstek.uflo.model.ProcessDefinition;
 import com.bstek.uflo.model.task.Task;
 import com.bstek.uflo.model.task.TaskState;
 import com.bstek.uflo.model.task.TaskType;
+import com.bstek.uflo.process.listener.GlobalTaskListener;
+import com.bstek.uflo.process.listener.TaskListener;
+import com.bstek.uflo.process.node.Node;
+import com.bstek.uflo.process.node.TaskNode;
 import com.bstek.uflo.query.TaskQuery;
 import com.bstek.uflo.utils.IDGenerator;
 
@@ -73,6 +80,22 @@ public class AddCountersignCommand implements Command<Task> {
 		newTask.setUrl(task.getUrl());
 		newTask.setSubject(task.getSubject());
 		session.save(newTask);
+		
+		ProcessDefinition pd=context.getProcessService().getProcessById(task.getProcessId());
+		Node node=pd.getNode(task.getNodeName());
+		if(node!=null && (node instanceof TaskNode)) {
+			TaskNode taskNode=(TaskNode)node;
+			String taskListenerBean=taskNode.getTaskListenerBean();
+			if(StringUtils.isNotEmpty(taskListenerBean)){
+				TaskListener taskListener=(TaskListener)context.getApplicationContext().getBean(taskListenerBean);
+				taskListener.onTaskCreate(context, task);
+			}
+		}
+		
+		Collection<GlobalTaskListener> coll=context.getApplicationContext().getBeansOfType(GlobalTaskListener.class).values();
+		for(GlobalTaskListener listener:coll){
+			listener.onTaskCreate(context, task);
+		}		
 		return newTask;
 	}
 }
