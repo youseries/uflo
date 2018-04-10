@@ -15,6 +15,7 @@
  ******************************************************************************/
 package com.bstek.uflo.service.impl.job;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.quartz.Job;
@@ -38,13 +39,26 @@ public class ScanReminderJob implements Job {
 		List<Long> reminderTaskList=detail.getReminderTaskList();
 		List<TaskReminder> reminders=taskService.getAllTaskReminders();
 		SchedulerService schedulerService=detail.getSchedulerService();
+		List<Long> list=new ArrayList<Long>();
 		for(TaskReminder reminder:reminders){
 			long taskId=reminder.getTaskId();
+			list.add(reminder.getId());
 			if(reminderTaskList.contains(taskId)){
 				continue;
 			}
 			schedulerService.addReminderJob(reminder,null,null);
-			reminderTaskList.add(taskId);
+			reminderTaskList.add(reminder.getId());
+		}
+		List<Long> removeList=new ArrayList<Long>();
+		for(long reminderId:reminderTaskList){
+			if(list.contains(reminderId)){
+				continue;
+			}
+			schedulerService.deleteJob(reminderId);
+			removeList.add(reminderId);
+		}
+		for(Long reminderId:removeList){
+			reminderTaskList.remove(reminderId);
 		}
 	}
 }

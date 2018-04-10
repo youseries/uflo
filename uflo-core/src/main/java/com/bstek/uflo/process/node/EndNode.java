@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
@@ -92,7 +93,6 @@ public class EndNode extends Node{
 		return null;
 	}
 	
-	@SuppressWarnings("unchecked")
 	private void completeProcessInstance(Context context,ProcessDefinition process,ProcessInstance processInstance, ProcessInstance rootProcessInstance,List<ProcessInstance> children) {
 		doLeaveEventHandler(context, processInstance);
 		completeActivityHistory(context, processInstance,null);
@@ -107,7 +107,12 @@ public class EndNode extends Node{
 			if(pi.getId()==rootProcessInstance.getId()){
 				continue;
 			}
-			context.getProcessService().deleteProcessInstance(pi);
+			ProcessVariableQuery query=new ProcessVariableQueryImpl(context.getCommandService());
+			query.processInstanceId(pi.getId());
+			List<Variable> variables=query.list();
+			saveHistoryProcessInstanceVariables(pi,context,variables);
+			session.delete(pi);
+			deleteProcessInstanceJobs(context,pi,false);
 		}
 		ProcessVariableQuery query=new ProcessVariableQueryImpl(context.getCommandService());
 		query.rootprocessInstanceId(rootProcessInstance.getRootId());
@@ -124,9 +129,25 @@ public class EndNode extends Node{
 		session.delete(rootProcessInstance);
 		context.getCommandService().executeCommand(new SaveHistoryProcessInstanceCommand(rootProcessInstance));
 		
+		deleteProcessInstanceJobs(context, rootProcessInstance,true);
+	}
+	@SuppressWarnings("unchecked")
+	private void deleteProcessInstanceJobs(Context context,ProcessInstance processInstance,boolean isRoot) {
+		Session session=context.getSession();
 		SchedulerService schedulerService=(SchedulerService)context.getApplicationContext().getBean(SchedulerService.BEAN_ID);
-		String hql="from "+Task.class.getName()+" where rootProcessInstanceId=:rootProcessInstanceId";
-		List<Task> tasks=session.createQuery(hql).setLong("rootProcessInstanceId", rootProcessInstance.getRootId()).list();
+		String hql="from "+Task.class.getName()+" where ";
+		if(isRoot){
+			hql+="rootProcessInstanceId=:rootProcessInstanceId";
+		}else{
+			hql+="processInstanceId=:processInstanceId";			
+		}
+		Query query=session.createQuery(hql);
+		if(isRoot){
+			query.setLong("rootProcessInstanceId", processInstance.getRootId());
+		}else{
+			query.setLong("processInstanceId", processInstance.getId());
+		}
+		List<Task> tasks=query.list();
 		for(Task t:tasks){
 			if(t.getType().equals(TaskType.Participative)){
 				hql="delete "+TaskParticipator.class.getName()+" where taskId=:taskId";

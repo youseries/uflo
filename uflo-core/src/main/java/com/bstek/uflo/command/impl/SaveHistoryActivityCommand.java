@@ -66,10 +66,9 @@ public class SaveHistoryActivityCommand implements Command<HistoryActivity> {
 				if(historyActivities.size()>0){
 					hisActivity=historyActivities.get(0);
 				}
-				
 			}
 			if(hisActivity==null){
-				return null;		
+				return null;
 			}
 			hisActivity.setEndDate(new Date());
 			if(StringUtils.isNotEmpty(leaveFlowName)){

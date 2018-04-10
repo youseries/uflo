@@ -23,7 +23,7 @@ import java.util.List;
  * @since 2013年9月8日
  */
 public class SequenceFlowDiagram extends Diagram implements Cloneable{
-	private static final long serialVersionUID = 8047351607165375668L;
+	private static final long serialVersionUID = 1L;
 	private List<Point> points;
 	private String to;
 	private String labelPosition;

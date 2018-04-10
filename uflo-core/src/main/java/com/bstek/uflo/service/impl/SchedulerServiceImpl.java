@@ -141,9 +141,21 @@ public class SchedulerServiceImpl implements SchedulerService,ApplicationContext
 				log.warning(e.getMessage());
 			}
 			taskService.deleteTaskReminder(reminder.getId());
-			reminderTaskList.remove(reminder.getTaskId());
+			reminderTaskList.remove(reminder.getId());
 		}
 	}
+	
+	@Override
+	public void deleteJob(long reminderId){
+		try {
+			scheduler.deleteJob(new JobKey(JOB_NAME_PREFIX+reminderId,JOB_GROUP_PREFIX));
+			String calendarId=REMINDER_CALENDAR_PREFIX+reminderId;
+			scheduler.deleteCalendar(calendarId);
+		} catch (SchedulerException e) {
+			throw new RuntimeException(e);
+		}
+	}
+	
 
 	@Override
 	public void resetScheduer() {
@@ -180,7 +192,7 @@ public class SchedulerServiceImpl implements SchedulerService,ApplicationContext
 	private void initTaskReminders(){
 		List<TaskReminder> reminders=taskService.getAllTaskReminders();
 		for(TaskReminder reminder:reminders){
-			reminderTaskList.add(reminder.getTaskId());
+			reminderTaskList.add(reminder.getId());
 			addReminderJob(reminder,null,null);
 		}
 		if(enableScanReminderJob){
