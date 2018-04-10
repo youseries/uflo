@@ -23,7 +23,7 @@ import java.util.List;
  * @since 2013年9月8日
  */
 public class ProcessDiagram extends Diagram implements Cloneable{
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 4764263010367898866L;
 	private int width;
 	private int height;
 	private boolean showTime;

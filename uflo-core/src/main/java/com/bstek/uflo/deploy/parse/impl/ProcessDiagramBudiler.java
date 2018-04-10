@@ -47,7 +47,7 @@ public class ProcessDiagramBudiler {
 		buildSize(process.getStartNode());		
 		diagram=new ProcessDiagram();
 		diagram.setName(process.getName());
-		diagram.setWidth(width+nodeWidth+10);
+		diagram.setWidth(width+nodeWidth+30);
 		diagram.setHeight(height+nodeHeight+10);
 		List<NodeDiagram> nodeDiagrams=new ArrayList<NodeDiagram>();
 		for(Node node:process.getNodes()){

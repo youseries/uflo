@@ -20,7 +20,7 @@ package com.bstek.uflo.process.assign;
  * @since 2013年8月17日
  */
 public class Assignee implements java.io.Serializable{
-	private static final long serialVersionUID = -3768562530790991401L;
+	private static final long serialVersionUID = 1L;
 	private String id;
 	private String name;
 	private String providerId;

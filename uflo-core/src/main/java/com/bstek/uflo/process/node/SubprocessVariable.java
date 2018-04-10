@@ -20,7 +20,7 @@ package com.bstek.uflo.process.node;
  * @since 2013年8月8日
  */
 public class SubprocessVariable implements java.io.Serializable{
-	private static final long serialVersionUID = -3972396170057496949L;
+	private static final long serialVersionUID = 1L;
 	private String inParameterKey;
 	private String outParameterKey;
 	public SubprocessVariable(String inParameterKey,String outParameterKey){
