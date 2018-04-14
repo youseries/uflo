@@ -77,7 +77,7 @@ public class DeleteProcessInstanceCommand implements Command<Object> {
 		session.createQuery("delete "+HistoryActivity.class.getName()+" where processInstanceId=:processInstanceId or rootProcessInstanceId=:rootId")
 	 		.setLong("processInstanceId", pi.getId()).setLong("rootId",pi.getRootId()).executeUpdate();
 		
-		Collection<Task> tasks=session.createCriteria(Task.class).add(Restrictions.eq("processInstanceId", processInstance.getId())).list();
+		Collection<Task> tasks=session.createCriteria(Task.class).add(Restrictions.eq("processInstanceId", pi.getId())).list();
 		SchedulerService schedulerService=(SchedulerService)context.getApplicationContext().getBean(SchedulerService.BEAN_ID);
 		for(Task task:tasks){
 			schedulerService.removeReminderJob(task);
