@@ -15,6 +15,7 @@
  ******************************************************************************/
 package com.bstek.uflo.deploy.parse;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -84,6 +85,7 @@ public abstract class AbstractParser implements Parser,ApplicationContextAware {
 		}
 		return diagram;
 	}
+
 	
 	protected void parseNodeCommonInfo(Element element, Node node) {
 		node.setName(unescape(element.attributeValue("name")));
@@ -116,16 +118,20 @@ public abstract class AbstractParser implements Parser,ApplicationContextAware {
 		String widthAttr=element.attributeValue("width");
 		String heightAttr=element.attributeValue("height");
 		if(StringUtils.isNotBlank(xAttr)){
-			node.setX(Integer.valueOf(xAttr));
+			BigDecimal bd=new BigDecimal(xAttr);
+			node.setX(bd.intValue());
 		}
 		if(StringUtils.isNotBlank(yAttr)){
-			node.setY(Integer.valueOf(yAttr));
+			BigDecimal bd=new BigDecimal(yAttr);
+			node.setY(bd.intValue());
 		}
 		if(StringUtils.isNotBlank(widthAttr)){
-			node.setWidth(Integer.valueOf(widthAttr));
+			BigDecimal bd=new BigDecimal(widthAttr);
+			node.setWidth(bd.intValue());
 		}
 		if(StringUtils.isNotBlank(heightAttr)){
-			node.setHeight(Integer.valueOf(heightAttr));
+			BigDecimal bd=new BigDecimal(heightAttr);
+			node.setHeight(bd.intValue());
 		}
 		
 	}
