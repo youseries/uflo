@@ -49,17 +49,7 @@ public class ForkNode extends Node {
 			}
 			flows.add(flow);
 		}
-		List<SequenceFlowImpl> flowList=new ArrayList<SequenceFlowImpl>();
 		for(SequenceFlowImpl flow:flows){
-			if(!flow.canExecute(context, processInstance)){
-				continue;
-			}
-			flowList.add(flow);
-		}
-		for(SequenceFlowImpl flow:flowList){
-			if(!flow.canExecute(context, processInstance)){
-				continue;
-			}
 			ProcessInstance subProcessInstance=new ProcessInstance();
 			subProcessInstance.setId(IDGenerator.getInstance().nextId());
 			subProcessInstance.setProcessId(getProcessId());
@@ -67,7 +57,7 @@ public class ForkNode extends Node {
 			subProcessInstance.setCreateDate(new Date());
 			subProcessInstance.setState(ProcessInstanceState.Start);
 			subProcessInstance.setRootId(processInstance.getRootId());
-			subProcessInstance.setParallelInstanceCount(flowList.size());
+			subProcessInstance.setParallelInstanceCount(flows.size());
 			subProcessInstance.setPromoter(processInstance.getPromoter());
 			subProcessInstance.setHistoryProcessInstanceId(processInstance.getHistoryProcessInstanceId());
 			subProcessInstance.setCurrentTask(processInstance.getCurrentTask());
