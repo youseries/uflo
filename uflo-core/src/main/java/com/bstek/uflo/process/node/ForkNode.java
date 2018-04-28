@@ -50,9 +50,6 @@ public class ForkNode extends Node {
 			flows.add(flow);
 		}
 		for(SequenceFlowImpl flow:flows){
-			if(!flow.canExecute(context, processInstance)){
-				continue;
-			}
 			ProcessInstance subProcessInstance=new ProcessInstance();
 			subProcessInstance.setId(IDGenerator.getInstance().nextId());
 			subProcessInstance.setProcessId(getProcessId());
