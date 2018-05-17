@@ -11,16 +11,16 @@ export default class CountersignTaskNode extends TaskNode{
     toXML(){
         let nodeInfo=`task-type="Countersign"`;
         if(this.countersignMultiplicity){
-            nodeInfo+=`countersign-multiplicity="${this.countersignMultiplicity}"`;
+            nodeInfo+=` countersign-multiplicity="${this.countersignMultiplicity}"`;
         }
         if(this.countersignPercentMultiplicity){
-            nodeInfo+=`countersign-percent-multiplicity="${this.countersignPercentMultiplicity}"`
+            nodeInfo+=` countersign-percent-multiplicity="${this.countersignPercentMultiplicity}"`
         }
         if(this.countersignExpression){
-            nodeInfo+=`countersign-expression="${this.countersignExpression}"`;
+            nodeInfo+=` countersign-expression="${this.countersignExpression}"`;
         }
         if(this.countersignHandler){
-            nodeInfo+=`countersign-handler="${this.countersignHandler}"`;
+            nodeInfo+=` countersign-handler="${this.countersignHandler}"`;
         }
         return this.buildTaskXml(nodeInfo);
     }
