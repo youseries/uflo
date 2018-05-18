@@ -1,8 +1,10 @@
 /**
- * Created by Jacky.gao on 2016/5/17.
+ * Created by Jacky.Gao on 2018-05-18.
+ * Base on Webpack4
  */
-var webpack = require('webpack');
-module.exports = {
+const path=require('path');
+module.exports={
+    mode:'development',
     entry: {
         todo:'./src/todo/index.jsx',
         central:'./src/central/index.jsx',
@@ -10,28 +12,36 @@ module.exports = {
         designer:'./src/designer/designer.js',
         diagram:'./src/ProcessDiagram.js'
     },
-    output: {
-        path: '../uflo-console/src/main/resources/uflo-asserts/js',
-        filename: '[name].bundle.js'
+    output:{
+        path:path.resolve('../uflo-console/src/main/resources/uflo-asserts/js'),
+        filename:'[name].bundle.js'
     },
-    module: {
-        loaders: [
+    module:{
+        rules:[
             {
                 test: /\.(jsx|js)?$/,
-                exclude: /(node_modules|bower_components)/,
-                loader: 'babel',
-                query: {
-                    presets: ['react', 'es2015'],
-                    compact:true
+                exclude: /node_modules/,
+                loader: "babel-loader",
+                options:{
+                    "presets": [
+                        "react","env"
+                    ]
                 }
             },
             {
-                test: /\.css$/,
-                loader: "style-loader!css-loader"
+                test:/\.css$/,
+                use: [{ loader: 'style-loader' }, { loader: 'css-loader' }]
             },
             {
                 test: /\.(eot|woff|woff2|ttf|svg|png|jpg)$/,
-                loader: 'url-loader?limit=1000000&name=[name]-[hash].[ext]'
+                use: [
+                    {
+                        loader: 'url-loader',
+                        options: {
+                            limit: 10000000
+                        }
+                    }
+                ]
             }
         ]
     }
