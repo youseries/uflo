@@ -59,6 +59,23 @@ public class AddCountersignCommand implements Command<Task> {
 			t.setCountersignCount(count+1);
 			session.update(t);
 		}
+		
+		ProcessDefinition pd=context.getProcessService().getProcessById(task.getProcessId());
+		Node node=pd.getNode(task.getNodeName());
+		if(node!=null && (node instanceof TaskNode)) {
+			TaskNode taskNode=(TaskNode)node;
+			String taskListenerBean=taskNode.getTaskListenerBean();
+			if(StringUtils.isNotEmpty(taskListenerBean)){
+				TaskListener taskListener=(TaskListener)context.getApplicationContext().getBean(taskListenerBean);
+				taskListener.onTaskCreate(context, task);
+			}
+		}
+		
+		Collection<GlobalTaskListener> coll=context.getApplicationContext().getBeansOfType(GlobalTaskListener.class).values();
+		for(GlobalTaskListener listener:coll){
+			listener.onTaskCreate(context, task);
+		}
+		
 		Task newTask=new Task();
 		newTask.setAssignee(username);
 		newTask.setBusinessId(task.getBusinessId());
@@ -79,23 +96,9 @@ public class AddCountersignCommand implements Command<Task> {
 		newTask.setType(task.getType());
 		newTask.setUrl(task.getUrl());
 		newTask.setSubject(task.getSubject());
+		newTask.setPriority(task.getPriority());
 		session.save(newTask);
 		
-		ProcessDefinition pd=context.getProcessService().getProcessById(task.getProcessId());
-		Node node=pd.getNode(task.getNodeName());
-		if(node!=null && (node instanceof TaskNode)) {
-			TaskNode taskNode=(TaskNode)node;
-			String taskListenerBean=taskNode.getTaskListenerBean();
-			if(StringUtils.isNotEmpty(taskListenerBean)){
-				TaskListener taskListener=(TaskListener)context.getApplicationContext().getBean(taskListenerBean);
-				taskListener.onTaskCreate(context, task);
-			}
-		}
-		
-		Collection<GlobalTaskListener> coll=context.getApplicationContext().getBeansOfType(GlobalTaskListener.class).values();
-		for(GlobalTaskListener listener:coll){
-			listener.onTaskCreate(context, task);
-		}		
 		return newTask;
 	}
 }
