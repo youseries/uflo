@@ -96,10 +96,5 @@ class Pagination extends Component{
         );
     }
 };
-Pagination.propTypes={
-    pageIndex:React.PropTypes.number.isRequired,
-    pageSize:React.PropTypes.number.isRequired,
-    total:React.PropTypes.number.isRequired,
-    changePageCallback:React.PropTypes.func.isRequired
-};
+
 export default Pagination;
