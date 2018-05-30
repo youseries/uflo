@@ -3,6 +3,7 @@
  */
 import BaseNode from './BaseNode.js';
 import taskSVG from './svg/task.svg';
+import {escapeXml} from '../Utils';
 
 export default class TaskNode extends BaseNode{
     constructor(){
@@ -24,10 +25,10 @@ export default class TaskNode extends BaseNode{
         const nodeProps=this.getXMLNodeBaseProps(json);
         let xml=`<${nodeName} ${nodeProps} ${nodeInfo}`;
         if(this.taskName){
-            xml+=` task-name="${this.taskName}"`;
+            xml+=` task-name="${escapeXml(this.taskName)}"`;
         }
         if(this.url){
-            xml+=` url="${this.url}"`;
+            xml+=` url="${escapeXml(this.url)}"`;
         }
         if(this.taskListenerBean){
             xml+=` task-listener-bean="${this.taskListenerBean}"`;
@@ -36,7 +37,7 @@ export default class TaskNode extends BaseNode{
             xml+=` assignment-type="${this.assignmentType}"`;
         }
         if(this.expression){
-            xml+=` expression="${this.expression}"`;
+            xml+=` expression="${escapeXml(this.expression)}"`;
         }
         if(this.assignmentHandlerBean){
             xml+=` assignment-handler-bean="${this.assignmentHandlerBean}"`;

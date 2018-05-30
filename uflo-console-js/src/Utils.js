@@ -56,3 +56,6 @@ export function getParameter(name) {
     if (r != null)return r[2];
     return null;
 };
+export function escapeXml(xml) {
+    return xml.replace(/[<>&"]/g,function(c){return {'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;'}[c];});
+};

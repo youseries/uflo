@@ -40,8 +40,9 @@ export default class TaskTool extends BaseTool{
         });
 
         const urlGroup=$(`<div class="form-group uflo-group"><label>URL：</label></div>`);
-        const urlEditor=$(`<input type="text" value="${target.url || ''}" class="form-control uflo-text-editor" style="width:308px">`);
+        const urlEditor=$(`<input type="text" class="form-control uflo-text-editor" style="width:308px">`);
         urlGroup.append(urlEditor);
+        urlEditor.val(target.url || '');
         group.append(urlGroup);
         urlEditor.change(()=>{
             target.url=urlEditor.val();
@@ -83,8 +84,9 @@ export default class TaskTool extends BaseTool{
         group.append(elGroup);
         const elRadio=$(`<label><input type="radio" ${target.assignmentType === 'Expression' ? 'checked' : ''} name="task_assign_type_radio">EL表达式</label>`);
         elGroup.append(elRadio);
-        const elEditor=$(`<input class="form-control uflo-text-editor" value="${target.expression || ''}"  style="margin-left: 10px;width: 280px;">`);
+        const elEditor=$(`<input class="form-control uflo-text-editor" style="margin-left: 10px;width: 280px;">`);
         elGroup.append(elEditor);
+        elEditor.val(target.expression || '');
         elEditor.change(function(){
             target.expression=$(this).val();
         });
@@ -489,9 +491,6 @@ export default class TaskTool extends BaseTool{
 
     buildDueReminder(target){
         const dueDefinition=target.dueDefinition || {reminder:{},dueAction:{}};
-        if(!target.dueDefinition){
-            target.dueDefinition=dueDefinition;
-        }
         const group=$(`<fieldset style="padding: 10px;border:solid 1px #dddddd;border-radius: 8px;margin-bottom: 10px;margin-top: 10px">
         <legend style="width: auto;margin-bottom: 1px;border-bottom:none;font-size: inherit;color: #4b4b4b;">任务过期提醒配置</legend></fieldset>`);
         const beanGroup=$(`<div class="form-group uflo-group"><label>提醒Bean：</label></div>`);
@@ -506,8 +505,8 @@ export default class TaskTool extends BaseTool{
             if(!target.dueDefinition){
                 target.dueDefinition=dueDefinition;
             }
-            if(!dueDefinition.reminder){
-                dueDefinition.reminder={};
+            if(!target.dueDefinition.reminder){
+                target.dueDefinition.reminder={};
             }
             dueDefinition.reminder.handlerBean=$(this).val();
         });
@@ -520,10 +519,10 @@ export default class TaskTool extends BaseTool{
                 if(!target.dueDefinition){
                     target.dueDefinition=dueDefinition;
                 }
-                if(!dueDefinition.reminder){
-                    dueDefinition.reminder={};
+                if(!target.dueDefinition.reminder){
+                    target.dueDefinition.reminder={};
                 }
-                dueDefinition.reminder.handlerBean=beanId;
+                target.dueDefinition.reminder.handlerBean=beanId;
             })
         });
 
