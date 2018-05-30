@@ -40,8 +40,9 @@ export default class TaskTool extends BaseTool{
         });
 
         const urlGroup=$(`<div class="form-group uflo-group"><label>URL：</label></div>`);
-        const urlEditor=$(`<input type="text" value="${target.url || ''}" class="form-control uflo-text-editor" style="width:308px">`);
+        const urlEditor=$(`<input type="text" class="form-control uflo-text-editor" style="width:308px">`);
         urlGroup.append(urlEditor);
+        urlEditor.val(target.url || '');
         group.append(urlGroup);
         urlEditor.change(()=>{
             target.url=urlEditor.val();
@@ -83,8 +84,9 @@ export default class TaskTool extends BaseTool{
         group.append(elGroup);
         const elRadio=$(`<label><input type="radio" ${target.assignmentType === 'Expression' ? 'checked' : ''} name="task_assign_type_radio">EL表达式</label>`);
         elGroup.append(elRadio);
-        const elEditor=$(`<input class="form-control uflo-text-editor" value="${target.expression || ''}"  style="margin-left: 10px;width: 280px;">`);
+        const elEditor=$(`<input class="form-control uflo-text-editor" style="margin-left: 10px;width: 280px;">`);
         elGroup.append(elEditor);
+        elEditor.val(target.expression || '');
         elEditor.change(function(){
             target.expression=$(this).val();
         });

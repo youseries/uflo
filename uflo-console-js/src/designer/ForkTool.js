@@ -42,8 +42,9 @@ export default class ForkTool  extends BaseTool{
         group.append(exprGroup);
         const exprConditionRadio=$(`<span><input type="radio" ${target.conditionType==='Expression' ? 'checked' : ''} name="connection_condition_type_radio">表达式条件</span>`);
         exprGroup.append(exprConditionRadio);
-        const exprEditor=$(`<input type="text" value="${target.expression || ''}" class="form-control uflo-text-editor" style="width: 270px;margin-left: 2px">`);
+        const exprEditor=$(`<input type="text" class="form-control uflo-text-editor" style="width: 270px;margin-left: 2px">`);
         exprGroup.append(exprEditor);
+        exprEditor.val(target.expression || '');
         exprEditor.change(function(){
             target.expression=$(this).val();
         });
