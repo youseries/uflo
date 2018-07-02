@@ -21,11 +21,11 @@ import java.util.Collection;
 import java.util.List;
 import java.util.StringTokenizer;
 
+import org.apache.commons.lang.StringUtils;
 import org.dom4j.Element;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
-import org.apache.commons.lang.StringUtils;
 
 import com.bstek.uflo.deploy.StringTools;
 import com.bstek.uflo.diagram.NodeDiagram;
@@ -36,6 +36,7 @@ import com.bstek.uflo.process.node.Mapping;
 import com.bstek.uflo.process.node.Node;
 import com.bstek.uflo.process.node.UserData;
 import com.bstek.uflo.process.security.Authority;
+import com.bstek.uflo.utils.Utils;
 
 
 /**
@@ -62,26 +63,34 @@ public abstract class AbstractParser implements Parser,ApplicationContextAware {
 			if(info.length!=4){
 				throw new IllegalArgumentException("Node "+element.attributeValue("name")+" diagram info is invalide!");
 			}
-			diagram.setX(Integer.valueOf(info[0]));
-			diagram.setY(Integer.valueOf(info[1]));
-			diagram.setWidth(Integer.valueOf(info[2]));
-			diagram.setHeight(Integer.valueOf(info[3]));			
+			BigDecimal x=Utils.toBigDecimal(info[0]);
+			diagram.setX(x.intValue());
+			BigDecimal y=Utils.toBigDecimal(info[1]);
+			diagram.setY(y.intValue());
+			BigDecimal w=Utils.toBigDecimal(info[2]);
+			diagram.setWidth(w.intValue());
+			BigDecimal h=Utils.toBigDecimal(info[3]);
+			diagram.setHeight(h.intValue());			
 		}
 		String x=element.attributeValue("x");
 		String y=element.attributeValue("y");
 		String width=element.attributeValue("width");
 		String height=element.attributeValue("height");
 		if(StringUtils.isNotBlank(x)){
-			diagram.setX(Integer.valueOf(x));
+			BigDecimal bd=Utils.toBigDecimal(x);
+			diagram.setX(bd.intValue());
 		}
 		if(StringUtils.isNotBlank(y)){
-			diagram.setY(Integer.valueOf(y));
+			BigDecimal bd=Utils.toBigDecimal(y);
+			diagram.setY(bd.intValue());
 		}
 		if(StringUtils.isNotBlank(width)){
-			diagram.setWidth(Integer.valueOf(width));
+			BigDecimal bd=Utils.toBigDecimal(width);
+			diagram.setWidth(bd.intValue());
 		}
 		if(StringUtils.isNotBlank(height)){
-			diagram.setHeight(Integer.valueOf(height));
+			BigDecimal bd=Utils.toBigDecimal(height);
+			diagram.setHeight(bd.intValue());
 		}
 		return diagram;
 	}
