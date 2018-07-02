@@ -2,6 +2,7 @@
  * Created by jacky on 2016/7/18.
  */
 import {Node,MsgBox} from 'flowdesigner';
+import {escapeXml} from '../Utils';
 
 export default class BaseNode extends Node{
     getNodeName(type){
@@ -100,7 +101,7 @@ export default class BaseNode extends Node{
             xml+=` condition-type="${json.conditionType}"`;
         }
         if(json.expression){
-            xml+=` expression="${json.expression}"`;
+            xml+=` expression="${escapeXml(json.expression)}"`;
         }
         if(json.handlerBean){
             xml+=` handler-bean="${json.handlerBean}"`;
