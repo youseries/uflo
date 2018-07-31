@@ -63,6 +63,9 @@ public class ProcessDefinition implements java.io.Serializable{
 	@Column(name="CATEGORY_ID_",length=60)
 	private String categoryId;
 	
+	@Column(name="CATEGORY_",length=60)
+	private String category;
+	
 	@Column(name="DESCRIPTION_")
 	private String description;
 	
@@ -160,6 +163,14 @@ public class ProcessDefinition implements java.io.Serializable{
 
 	public void setCategoryId(String categoryId) {
 		this.categoryId = categoryId;
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
 	}
 
 	public String getDescription() {

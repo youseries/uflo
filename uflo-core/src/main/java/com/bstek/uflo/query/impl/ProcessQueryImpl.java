@@ -42,6 +42,7 @@ public class ProcessQueryImpl implements ProcessQuery,QueryJob{
 	private String name;
 	private String key;
 	private String categoryId;
+	private String category;
 	private String subject;
 	private int version;
 	private int firstResult;
@@ -109,6 +110,9 @@ public class ProcessQueryImpl implements ProcessQuery,QueryJob{
 				criteria.add(Restrictions.eq("categoryId", categoryId));
 			}
 		}
+		if(StringUtils.isNotBlank(category)) {
+			criteria.add(Restrictions.eq("category", category));
+		}
 		if(version>0){
 			criteria.add(Restrictions.eq("version", Integer.valueOf(version)));
 		}
@@ -159,6 +163,12 @@ public class ProcessQueryImpl implements ProcessQuery,QueryJob{
 		return this;
 	}
 
+	@Override
+	public ProcessQuery category(String category) {
+		this.category=category;
+		return this;
+	}
+	
 	public ProcessQuery nameLike(String name) {
 		this.name=name;
 		return this;

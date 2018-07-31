@@ -30,6 +30,9 @@ export default class UfloDesigner extends FlowDesigner{
         if(this.categoryId){
             xml+=` category-id="${this.categoryId}"`;
         }
+        if(this.category){
+            xml+=` category="${this.category}"`;
+        }
         if(this.url){
             xml+=` start-process-url="${this.url}"`;
         }
@@ -55,6 +58,7 @@ export default class UfloDesigner extends FlowDesigner{
         this.url=json.startProcessUrl;
         this.eventHandlerBean=json.eventHandlerBean;
         this.categoryId=json.categoryId;
+        this.category=json.category;
         this.effectDate=json.effectDate;
         this.description=json.description;
         for(let nodeJson of json.nodes){
@@ -157,14 +161,28 @@ export default class UfloDesigner extends FlowDesigner{
             });
         });
 
-        const categoryGroup=$(`<div class="form-group"><label>分类ID：</label></div>`);
-        g.append(categoryGroup);
-        const categoryText=$(`<input type="text" class="form-control uflo-text-editor" style="width: 315px">`);
-        categoryGroup.append(categoryText);
-        categoryText.val(target.categoryId);
-        categoryText.change(function(){
+        const categoryIdGroup=$(`<div class="form-group"><label>分类ID：</label></div>`);
+        g.append(categoryIdGroup);
+        const categoryIdText=$(`<input type="text" class="form-control uflo-text-editor" style="width: 315px">`);
+        categoryIdGroup.append(categoryIdText);
+        categoryIdText.val(target.categoryId);
+        categoryIdText.change(function(){
             target.categoryId=$(this).val();
         });
+
+        if(window._categories.length>0){
+            const categoryGroup=$(`<div class="form-group"><label>业务分类：</label></div>`);
+            g.append(categoryGroup);
+            const categorySelect=$(`<select class="form-control uflo-text-editor" style="width: 300px"></select>`);
+            for(let category of window._categories){
+                categorySelect.append(`<option value="${category}">${category}</option>`);
+            }
+            categoryGroup.append(categorySelect);
+            categorySelect.val(target.category);
+            categorySelect.change(function(){
+                target.category=$(this).val();
+            });
+        }
 
         const effectDateGroup=$(`<div class="form-group"><label>生效日期：</label></div>`);
         g.append(effectDateGroup);

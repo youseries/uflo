@@ -71,6 +71,7 @@ public class ProcessParser extends AbstractParser{
 		process.setStartProcessUrl(unescape(element.attributeValue("start-process-url")));
 		process.setKey(unescape(element.attributeValue("key")));
 		process.setCategoryId(unescape(element.attributeValue("category-id")));
+		process.setCategory(unescape(element.attributeValue("category")));
 		String effectDateStr=unescape(element.attributeValue("effect-date"));
 		if(StringUtils.isNotEmpty(effectDateStr)){
 			SimpleDateFormat sd=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

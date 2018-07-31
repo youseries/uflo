@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.util.Collection;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -15,12 +16,15 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
+import org.springframework.beans.BeansException;
+import org.springframework.context.ApplicationContext;
 
 import com.bstek.uflo.console.handler.impl.RenderPageServletHandler;
 import com.bstek.uflo.console.provider.ProcessFile;
 import com.bstek.uflo.console.provider.ProcessProvider;
 import com.bstek.uflo.console.provider.ProcessProviderUtils;
 import com.bstek.uflo.deploy.parse.impl.ProcessParser;
+import com.bstek.uflo.env.AdditionalInfoProvider;
 import com.bstek.uflo.model.ProcessDefinition;
 import com.bstek.uflo.service.ProcessService;
 
@@ -30,6 +34,7 @@ import com.bstek.uflo.service.ProcessService;
  */
 public class DesignerServletHandler extends RenderPageServletHandler {
 	private ProcessService processService;
+	private AdditionalInfoProvider additionalInfoProvider;
 	@Override
 	public void execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String method=retriveMethod(req);
@@ -38,6 +43,21 @@ public class DesignerServletHandler extends RenderPageServletHandler {
 		}else{
 			VelocityContext context = new VelocityContext();
 			context.put("contextPath", req.getContextPath());
+			if(additionalInfoProvider!=null) {
+				List<String> categories=additionalInfoProvider.categories();
+				if(categories!=null && categories.size()>0) {
+					StringBuilder sb=new StringBuilder();
+					for(String category:categories) {
+						if(sb.length()>0) {
+							sb.append(",");
+						}
+						sb.append("\""+category+"\"");
+					}
+					context.put("categories", sb.toString());
+				}
+			}else {
+				context.put("categories", "");
+			}
 			resp.setContentType("text/html");
 			resp.setCharacterEncoding("utf-8");
 			Template template=ve.getTemplate("uflo-html/designer.html","utf-8");
@@ -117,6 +137,15 @@ public class DesignerServletHandler extends RenderPageServletHandler {
 			e.printStackTrace();
 		}
 		return str;
+	}
+	
+	@Override
+	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+		super.setApplicationContext(applicationContext);
+		Collection<AdditionalInfoProvider> coll=applicationContext.getBeansOfType(AdditionalInfoProvider.class).values();
+		if(coll.size()>0) {
+			additionalInfoProvider=coll.iterator().next();
+		}
 	}
 
 	@Override

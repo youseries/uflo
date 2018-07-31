@@ -27,6 +27,7 @@ import com.bstek.uflo.model.ProcessDefinition;
 public interface ProcessQuery extends Query<List<ProcessDefinition>>{
 	ProcessQuery id(long id);
 	ProcessQuery categoryId(String id);
+	ProcessQuery category(String category);
 	ProcessQuery createDateLessThen(Date date);
 	ProcessQuery createDateLessThenOrEquals(Date date);
 	ProcessQuery createDateGreaterThen(Date date);
