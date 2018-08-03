@@ -15,20 +15,13 @@
  ******************************************************************************/
 package com.bstek.uflo.model.task;
 
-import java.util.Collection;
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import org.codehaus.jackson.annotate.JsonIgnore;
 
 import com.bstek.uflo.model.Activity;
 
@@ -102,11 +95,6 @@ public class Task extends Activity{
 	@Column(name="BUSINESS_ID_",length=60)
 	private String businessId;
 	
-	@JsonIgnore
-	@OneToMany(cascade=CascadeType.DETACH,fetch=FetchType.LAZY)
-	@JoinColumn(name="TASK_ID_")
-	private Collection<TaskParticipator> taskParticipators;
-
 	public long getProcessInstanceId() {
 		return processInstanceId;
 	}
@@ -201,14 +189,6 @@ public class Task extends Activity{
 
 	public void setCountersignCount(int countersignCount) {
 		this.countersignCount = countersignCount;
-	}
-
-	public Collection<TaskParticipator> getTaskParticipators() {
-		return taskParticipators;
-	}
-
-	public void setTaskParticipators(Collection<TaskParticipator> taskParticipators) {
-		this.taskParticipators = taskParticipators;
 	}
 
 	public TaskType getType() {
