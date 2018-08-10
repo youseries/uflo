@@ -17,6 +17,7 @@ package com.bstek.uflo.command.impl;
 
 import java.util.List;
 
+import org.hibernate.LockMode;
 import org.hibernate.Session;
 
 import com.bstek.uflo.command.Command;
@@ -37,7 +38,7 @@ public class AcquireDbidCommand implements Command<Long>{
 	public Long execute(Context context) {
 		long nextId=0;
 		Session session=context.getSession();
-		List<ContextProperty> list=session.createQuery("from "+ContextProperty.class.getName()+" where key=:key").setString("key", ID_KEY).list();
+		List<ContextProperty> list=session.createQuery("from "+ContextProperty.class.getName()+" as p where key=:key").setLockMode("p", LockMode.PESSIMISTIC_WRITE).setString("key", ID_KEY).list();
 		if(list.size()>0){
 			ContextProperty prop=list.get(0);
 			nextId=Long.valueOf(prop.getValue());
