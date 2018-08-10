@@ -38,7 +38,7 @@ public class AcquireDbidCommand implements Command<Long>{
 	public Long execute(Context context) {
 		long nextId=0;
 		Session session=context.getSession();
-		List<ContextProperty> list=session.createQuery("from "+ContextProperty.class.getName()+" as p where p.key=:key").setString("key", ID_KEY).setLockMode("p", LockMode.PESSIMISTIC_WRITE).list();
+		List<ContextProperty> list=session.createQuery("from "+ContextProperty.class.getName()+" as p where p.key=:key").setString("key", ID_KEY).setLockMode("p", LockMode.PESSIMISTIC_READ).list();
 		if(list.size()>0){
 			ContextProperty prop=list.get(0);
 			nextId=Long.valueOf(prop.getValue());
