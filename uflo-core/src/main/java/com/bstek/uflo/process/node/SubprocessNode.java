@@ -160,4 +160,7 @@ public class SubprocessNode extends Node {
 	public void setCompleteStartTask(boolean completeStartTask) {
 		this.completeStartTask = completeStartTask;
 	}
+	public boolean isCompleteStartTask() {
+		return completeStartTask;
+	}
 }
