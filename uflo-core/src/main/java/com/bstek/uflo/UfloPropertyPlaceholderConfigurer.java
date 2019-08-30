@@ -15,13 +15,13 @@
  ******************************************************************************/
 package com.bstek.uflo;
 
-import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 
 /**
  * @author Jacky.gao
  * @since 2016年5月25日
  */
-public class UfloPropertyPlaceholderConfigurer extends PropertyPlaceholderConfigurer {
+public class UfloPropertyPlaceholderConfigurer extends PropertySourcesPlaceholderConfigurer {
 	public UfloPropertyPlaceholderConfigurer() {
 		setIgnoreUnresolvablePlaceholders(true);
 		setOrder(100);
