@@ -83,22 +83,7 @@
 		<property name="blockSize" value="${uflo.idBlockSize}"></property>
 	</bean>
 
-<!-- 	<bean id="uflo.restService" class="com.bstek.uflo.service.impl.RestServiceImpl">
-		<constructor-arg name="username" value="${uflo.restAccessUsername}"></constructor-arg>
-		<constructor-arg name="password" value="${uflo.restAccessPassword}"></constructor-arg>
-		<property name="baseUrl" value="${uflo.restAccessBaseUrl}"></property>
-		<property name="converters">
-			<list>
-				<bean
-					class="org.springframework.http.converter.xml.Jaxb2RootElementHttpMessageConverter"></bean>
-				<bean
-					class="org.springframework.http.converter.StringHttpMessageConverter">
-					<constructor-arg value="utf-8"></constructor-arg>
-				</bean>
-			</list>
-		</property>
-	</bean> -->
-	
+
 	<bean id="uflo.processParser" class="com.bstek.uflo.deploy.parse.impl.ProcessParser"></bean>
 	<bean id="uflo.startParser" class="com.bstek.uflo.deploy.parse.impl.StartParser"></bean>
 	<bean id="uflo.taskParser" class="com.bstek.uflo.deploy.parse.impl.TaskParser"></bean>

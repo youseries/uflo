@@ -5,6 +5,9 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
 	">
 	<import resource="classpath:uflo-context-configs.xml" />
+	
+	<context:property-placeholder location="classpath:uflo-console-configure.properties" ignore-unresolvable="true"/>
+	
 	<bean id="uflo.console.resourceLoaderServletHandler"
 		class="com.bstek.uflo.console.handler.impl.res.ResourceLoaderServletHandler"></bean>
 	<bean id="uflo.console.todoServletHandler"
@@ -45,14 +48,6 @@
 	</bean>
 	<bean id="uflo.console.handlerListServletHandler" class="com.bstek.uflo.console.handler.impl.list.HandlerListServletHandler">
 		<property name="debug" value="${uflo.debug}"></property>
-	</bean>
-
-	<bean id="uflo.console.propertyConfigurer"
-		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-		<property name="ignoreUnresolvablePlaceholders" value="true"></property>
-		<property name="location">
-			<value>classpath:uflo-console-configure.properties</value>
-		</property>
 	</bean>
 	
 	<bean id="uflo.defaultFileProcessProvider" class="com.bstek.uflo.console.provider.DefaultFileProcessProvider">
