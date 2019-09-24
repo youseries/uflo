@@ -7,9 +7,7 @@ UFLO2是一款纯Java流程引擎，它架构于Spring、Hibernate之上，提�
 
 # QQ群
 
-群号：423339793
-
-#### ![](https://github.com/youseries/assets/blob/master/images/qq-qrcode.png)
+一群：423339793（已满），二群：636590564
 
 # License
 
